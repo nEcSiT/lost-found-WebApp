@@ -17,3 +17,14 @@ showLogin.addEventListener("click", (e) => {
   signupForm.classList.remove("active");
   loginForm.classList.add("active");
 });
+
+// Handle Login Form Submission
+  document.getElementById("loginForm").addEventListener("submit", function(e) {
+    e.preventDefault(); // stop actual form submission
+    
+    // Will check credentials with backend
+    // For now, just redirect to dashboard.html
+    window.location.href = "dashboard.html";
+  });
+
+
