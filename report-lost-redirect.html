@@ -5,7 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Report Lost Item</title>
     <link rel="stylesheet" href="report-lost-redirect.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
   </head>
+
   <body>
     <div class="header">
       <img src="images/logo.jpg" alt="Campus Lost & Found Logo" class="logo" />
@@ -18,16 +23,71 @@
 
     <div class="dashboard-container">
       <div class="card">
-        <h2>Describe Lost Item</h2>
-        <p>
+        <form class="report-lost-form">
+          <!-- Upload Photo -->
+          <div class="photo-upload-flex">
+            <label
+              for="photo-upload"
+              class="photo-label"
+              style="cursor: pointer"
+            >
+              <i class="fas fa-camera fa-2x photo-icon"></i>
+              Upload photo
+            </label>
+            <input
+              type="file"
+              id="photo-upload"
+              name="photo-upload"
+              accept="image/*"
+              capture
+              style="display: none"
+            />
+          </div>
+
+          <!-- Category Dropdown -->
+          <label for="category">Category</label>
+          <select id="category" name="category" required>
+            <option value="">Select category</option>
+            <option value="electronics">Electronics</option>
+            <option value="books">Books</option>
+            <option value="clothing">Clothing</option>
+            <option value="accessories">Accessories</option>
+            <option value="documents">Documents</option>
+            <option value="others">Others</option>
+          </select>
+
+          <!-- Date and Time -->
+          <div class="date-time-row">
+            <div>
+              <label for="date">Date</label>
+              <input type="date" id="date" name="date" required />
+            </div>
+            <div>
+              <label for="time">Time</label>
+              <input type="time" id="time" name="time" optional />
+            </div>
+          </div>
+
+          <!-- Item Description -->
+          <label for="description">Item Description</label>
+          <textarea
+            id="description"
+            name="description"
+            rows="3"
+            required
+          ></textarea>
+          <button type="submit" class="btn btn-primary">Submit Report</button>
+        </form>
+        <!-- <h2>Describe Lost Item</h2> -->
+        <!-- <p>
           If you have lost something, let us help you reconnect with it. Click
           below to report your lost item.
         </p>
         <button onclick="window.location.href='report-lost.html'">
           Report here
-        </button>
+        </button> -->
       </div>
     </div>
-    <div class="footer">&copy; 2025 Campus Lost &amp; Found</div>
+    <!-- <div class="footer">&copy; 2025 Campus Lost &amp; Found</div> -->
   </body>
 </html>

@@ -28,7 +28,6 @@ body {
 .main-header {
   width: 100%;
   background-color:#0056b3;
-  /* blue */
   padding: 1rem 2rem;
   color: white;
   position: fixed;
@@ -61,17 +60,54 @@ body {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  text-align: center;
+  text-align: left;
 }
 
-.header-text h1 {
+/* .header-text h1 {
   font-size: 1.5rem;
   font-weight: bold;
-}
+} */
 
 .header-text p {
   font-size: 0.9rem;
   opacity: 0.9;
+}
+
+.welcome-section {
+  text-align: center;
+  margin: 90px 0 24px 0;
+  padding-top: 50px;
+}
+
+.welcome-title {
+  font-size: 1.7rem;
+  font-weight: bold;
+  color: #1e3c72;
+  margin-bottom: 10px;
+}
+
+.welcome-desc {
+  font-size: 1.1rem;
+  color: #2a5298;
+  margin-bottom: 18px;
+}
+
+@media (max-width: 600px) {
+  .welcome-section {
+    margin: 70px 12px 20px 12px; /* Top, right, bottom, left */
+    padding: 20 8px;
+  }
+}
+.student-vector {
+  position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: -40px;
+    /* Negative margin to overlap with login card */
+    z-index: 1;
+    max-width: 300px;
+    height: auto;
 }
 
 /* Forms */
@@ -126,16 +162,16 @@ input:focus {
 }
 
 .btn-primary:hover {
-  background-color: #1e40af;
+  background-color: #0ae2d0;
 }
 
 .btn-secondary {
-  background-color: #34d399;
+  background-color: #0ae2d0;
   color: white;
 }
 
 .btn-secondary:hover {
-  background-color: #10b981;
+  background-color: #1e40af;
 }
 
 /* Toggle text */

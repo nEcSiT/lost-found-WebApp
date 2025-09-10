@@ -17,7 +17,6 @@ body {
 .main-header {
   width: 100%;
   background-color: #0056b3;
-  /* blue */
   padding: 1rem 2rem;
   color: white;
   position: fixed;
@@ -61,9 +60,9 @@ body {
 
 .subheader {
   width: 100%;
-  background: #fff1c3;
+  background: #d4f5e9;
   text-align: center;
-  padding: 20px;
+  padding: 30px 0;
   margin-top: 70px;
   box-shadow: 0 2px 4px rgba(0, 86, 179, 0.05);
 }
@@ -74,10 +73,10 @@ body {
   font-style: italic;
   opacity: 0.95;
 }
-.subheader .tagline:hover {
+/* .subheader .tagline:hover {
   color: #12d473;
   cursor: pointer;
-}
+} */
 
 /* Dashboard Layout */
 .dashboard-container {
@@ -124,7 +123,7 @@ body {
 }
 
 .card button:hover {
-  background-color: #12d473;
+  background-color:#0ae2d0;
 }
 
 /* Footer */
