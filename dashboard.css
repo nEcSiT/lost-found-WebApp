@@ -1,0 +1,100 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f9fafc;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Header */
+.header {
+  background-color: #0056b3;
+  /* Blue header */
+  color: white;
+  text-align: center;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.logo {
+  height: 50px;
+  width: 50px;
+  object-fit: contain;
+  flex-shrink: 0;
+  border-radius: 25px;
+}
+
+.header h1 {
+  margin-bottom: 5px;
+}
+
+.header .tagline {
+  font-size: 0.9em;
+  opacity: 0.9;
+}
+
+/* Dashboard Layout */
+.dashboard-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 30px;
+  flex: 1;
+}
+
+.card {
+  background: white;
+  width: 300px;
+  padding: 20px;
+  margin: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card h2 {
+  color: #0056b3;
+  margin-bottom: 10px;
+}
+
+.card p {
+  margin-bottom: 15px;
+  font-size: 0.95em;
+}
+
+.card button {
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+
+.card button:hover {
+  background-color: #004494;
+}
+
+/* Footer */
+.footer {
+  background-color: #222;
+  color: white;
+  text-align: center;
+  padding: 12px;
+  font-size: 0.9em;
+}
