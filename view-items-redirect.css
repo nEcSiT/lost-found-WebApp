@@ -1,11 +1,11 @@
 /* View Items Redirect Page Styles */
 body {
   font-family: Arial, sans-serif;
-  background: #f3eafc;
+  background: #f9fafc;
   color: #333;
 }
 .header {
-  background: #8e44ad;
+  background:#0056b3;
   color: #fff;
   text-align: center;
   padding: 16px 0 8px 0;
@@ -42,10 +42,10 @@ body {
   cursor: pointer;
 }
 .card button:hover {
-  background: #6c3483;
+  background: #123e9c;
 }
 .footer {
-  background: #8e44ad;
+  background: #353535;
   color: #fff;
   text-align: center;
   padding: 10px;
