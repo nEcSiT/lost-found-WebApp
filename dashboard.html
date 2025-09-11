@@ -27,23 +27,96 @@
 
     <!-- Dashboard Content -->
     <main class="dashboard-container">
-      <div class="card">
-        <h2>🎒 Report Found Item</h2>
-        <p>Help a fellow student by reporting an item you’ve found.</p>
-        <button>Report Found Item</button>
+      <!-- Search Bar -->
+      <div class="search-bar">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Looking for lost item?"
+        />
+        <button id="searchBtn">Search</button>
       </div>
 
-      <div class="card">
-        <h2>📌 Report Lost Item</h2>
-        <p>Submit details of an item you’ve lost on campus.</p>
-        <button>Report Lost Item</button>
-      </div>
+      <!-- Report Section -->
+      <section class="report-section">
+        <div class="card">
+          <h2>📌 Report Lost Item</h2>
+          <p>Submit details of an item you’ve lost on campus.</p>
+          <button>Report Lost Item</button>
+        </div>
 
-      <div class="card">
-        <h2>🔍 View Items</h2>
-        <p>Browse through reported lost and found items.</p>
-        <button>View Items</button>
-      </div>
+        <div class="card">
+          <h2>🎒 Report Found Item</h2>
+          <p>Help a fellow student by reporting an item you’ve found.</p>
+          <button>Report Found Item</button>
+        </div>
+      </section>
+
+      <!-- Recent Items -->
+      <section class="recent-items">
+        <h2>Recent Items</h2>
+        <div class="items-flex">
+          <!-- Example items
+          <div class="item">Laptop Bag</div>
+          <div class="item">Math Textbook</div>
+          <div class="item">ID Card</div> -->
+        </div>
+      </section>
+
+      <!-- Categories -->
+      <!-- Categories -->
+      <section class="categories">
+        <h3>Categories</h3>
+        <div class="categories-grid">
+          <!-- Example category with items -->
+          <div class="category-card">
+            <div class="category-header">Electronics</div>
+            <div class="category-items">
+              <div class="item">Laptop</div>
+              <div class="item">Headphones</div>
+              <div class="item">Phone Charger</div>
+            </div>
+          </div>
+
+          <div class="category-card">
+            <div class="category-header">Books</div>
+            <div class="category-items">
+              <div class="item">Math Textbook</div>
+              <div class="item">Notebook</div>
+            </div>
+          </div>
+
+          <div class="category-card">
+            <div class="category-header">Clothing</div>
+            <div class="category-items">
+              <div class="item">Jacket</div>
+              <div class="item">Cap</div>
+            </div>
+          </div>
+
+          <div class="category-card">
+            <div class="category-header">Accessories</div>
+            <div class="category-items">
+              <div class="item">Wristwatch</div>
+            </div>
+          </div>
+
+          <div class="category-card">
+            <div class="category-header">Documents</div>
+            <div class="category-items">
+              <div class="item">ID Card</div>
+              <div class="item">Passport</div>
+            </div>
+          </div>
+
+          <div class="category-card">
+            <div class="category-header">Others</div>
+            <div class="category-items">
+              <div class="item">Umbrella</div>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
 
     <!-- Footer -->

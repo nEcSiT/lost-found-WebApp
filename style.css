@@ -63,10 +63,11 @@ body {
   text-align: left;
 }
 
-/* .header-text h1 {
+ .header-text h1 {
   font-size: 1.5rem;
   font-weight: bold;
-} */
+  padding-left: 10px;
+} 
 
 .header-text p {
   font-size: 0.9rem;

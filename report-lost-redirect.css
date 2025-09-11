@@ -62,14 +62,23 @@ body {
 
 .date-time-row {
   display: flex;
-  gap: 16px;
-  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+ justify-content: space-between; 
 }
 
 .date-time-row>div {
   flex: 1;
-  display: flex;
-  flex-direction: column;
+  min-width: 200px;
+ display: flex;
+  flex-direction: column; 
+}
+
+@media (max-width: 600px) {
+  .date-time-row {
+    flex-direction: column;
+    /* stack on small screens */
+  }
 }
 
 select,
