@@ -5,7 +5,7 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: Poppins, Arial, sans-serif;
   background-color: #f9fafc;
   color: #333;
   display: flex;
@@ -111,6 +111,18 @@ body {
 background-color: #0ae2d0;
   cursor: pointer;
 }
+
+/* Glow effect on focus */
+.search-bar input:focus {
+  border-color: #2563eb;
+  outline: none;
+  
+  box-shadow: 0 0 10px #2563eb88;
+}
+
+/* Button styling (inherits global button style if set) */
+.search-bar button {
+  padding: 0.6rem 1rem;}
 
 .item.highlight {
   background: #d4f5e9 !important;
@@ -251,11 +263,84 @@ background-color: #0ae2d0;
   background-color:#0ae2d0;
 }
 
+/* Recent Items Grid */
+.recent-items {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin: 1.5rem 0;
+}
+
+.recent-items .item-card {
+  background: #f0f7ff;
+  /* light blue card background */
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+  flex: 1 1 100px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+.recent-items .item-card:hover {
+  transform: translateY(-3px);
+}
+
+.recent-items .item-card img {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 0.5rem;
+}
+
+/* Welcome Section */
+.welcome {
+  background: #b9f1ff;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.welcome h3 {
+  color: #1e3a8a;
+  /* dark navy blue */
+  margin-bottom: 0.5rem;
+}
+
+.welcome p {
+  color: #4b5563;
+  /* gray text */
+  font-size: 0.95rem;
+}
+
 /* Footer */
 .footer {
-  background-color: #3d3d3d;
+  background: #4b4b4b;
+  /* deep blue */
   color: white;
   text-align: center;
-  padding: 12px;
-  font-size: 0.9em;
+  padding: 1rem;
+  margin-top: 2rem;
+  border-top: 3px solid #3b82f6;
+  /* accent line */
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
+  font-size: 0.9rem;
 }
+
+/* Responsive Tweaks */
+@media (max-width: 768px) {
+  .recent-items {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .recent-items .item-card {
+    width: 80%;
+  }
+
+  .welcome {
+    margin: 1rem;
+  }
+}
+/* Report Found Redirect Page Styles */

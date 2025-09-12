@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Campus Lost & Found - Dashboard</title>
+    <link rel="stylesheet" href="global.css" />
     <link rel="stylesheet" href="dashboard.css" />
     <script src="dashboard.js" defer></script>
   </head>
@@ -34,27 +35,69 @@
           id="searchInput"
           placeholder="Looking for lost item?"
         />
+
         <button id="searchBtn">Search</button>
       </div>
 
       <!-- Report Section -->
       <section class="report-section">
         <div class="card">
-          <h2>📌 Report Lost Item</h2>
+          <h2>Report Lost Item</h2>
           <p>Submit details of an item you’ve lost on campus.</p>
-          <button>Report Lost Item</button>
+          <a href="report-found-redirect.html" class="btn-primary"
+            >Report Here</a
+          >
         </div>
 
         <div class="card">
-          <h2>🎒 Report Found Item</h2>
-          <p>Help a fellow student by reporting an item you’ve found.</p>
-          <button>Report Found Item</button>
+          <h2>Report Found Item</h2>
+          <p>Submit Photos of an item you’ve found on campus.</p>
+          <a href="report-lost-redirect.html" class="btn-primary"
+            >Report Here</a
+          >
         </div>
+
+        <div class="card">
+          <h2>Item Details</h2>
+          <p>Describe your lost item to match available found items</p>
+          <button>Submit Here</button>
+        </div>
+
+        <div class="card">
+          <h2>Claim Verification</h2>
+          <p>Submit your verified information to claim item</p>
+          <button>Report Here</button>
+        </div>
+      </section>
+
+      <!-- More Recent Items -->
+      <div class="recent-items">
+        <div class="item-card">
+          <img src="images/bag-icon.png" alt="Bag" />
+          <p>Bags</p>
+        </div>
+        <div class="item-card">
+          <img src="images/idcard-icon.png" alt="ID Card" />
+          <p>ID Cards</p>
+        </div>
+        <div class="item-card">
+          <img src="images/laptop-icon.png" alt="laptop" />
+          <p>Laptops</p>
+        </div>
+      </div>
+
+      <!-- Welcome Section -->
+      <section class="welcome">
+        <h3>Welcome, Danny Adjei</h3>
+        <p>
+          Here’s your personalized dashboard. Track your lost items or report
+          new ones anytime.
+        </p>
       </section>
 
       <!-- Recent Items -->
       <section class="recent-items">
-        <h2>Recent Items</h2>
+        <h2>Uploaded Items</h2>
         <div class="items-flex">
           <!-- Example items
           <div class="item">Laptop Bag</div>
@@ -121,7 +164,10 @@
 
     <!-- Footer -->
     <footer class="footer">
-      <p>&copy; 2025 Campus Lost & Found. All rights reserved.</p>
+      <p>
+        &copy; 2025 Campus Lost & Found | Helping students get back their
+        belongings
+      </p>
     </footer>
   </body>
 </html>

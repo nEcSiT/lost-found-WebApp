@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Report Lost Item</title>
+    <title>Report Found Item</title>
+    <link rel="stylesheet" href="global.css" />
     <link rel="stylesheet" href="report-lost-redirect.css" />
     <link
       rel="stylesheet"
@@ -14,11 +15,11 @@
   <body>
     <div class="header">
       <img src="images/logo.jpg" alt="Campus Lost & Found Logo" class="logo" />
-      <h1>Kindly Report Lost Items</h1>
+      <h1>Kindly Report Found Items</h1>
     </div>
 
     <div class="subheader">
-      <p class="tagline">We will help you connect them back!</p>
+      <p class="tagline">We will help their owners reconnect them!</p>
     </div>
 
     <div class="dashboard-container">
@@ -26,22 +27,27 @@
         <form class="report-lost-form">
           <!-- Upload Photo -->
           <div class="photo-upload-flex">
-            <label
-              for="photo-upload"
-              class="photo-label"
-              style="cursor: pointer"
-            >
-              <i class="fas fa-camera fa-2x photo-icon"></i>
-              Upload photo
-            </label>
-            <input
-              type="file"
-              id="photo-upload"
-              name="photo-upload"
-              accept="image/*"
-              capture
-              style="display: none"
-            />
+            <div class="photo-label">
+              <p>Upload Photo</p>
+
+              <!-- Hidden file input -->
+              <input
+                type="file"
+                id="photo-upload"
+                name="photo-upload"
+                accept="image/*"
+                capture="environment"
+                multiple
+                required
+                style="display: none"
+              />
+
+              <!-- Circular upload button -->
+              <label for="photo-upload" class="upload-circle">📷</label>
+
+              <!-- Preview area -->
+              <div id="preview" class="preview-grid"></div>
+            </div>
           </div>
 
           <!-- Category Dropdown -->
@@ -78,16 +84,8 @@
           ></textarea>
           <button type="submit" class="btn btn-primary">Submit Report</button>
         </form>
-        <!-- <h2>Describe Lost Item</h2> -->
-        <!-- <p>
-          If you have lost something, let us help you reconnect with it. Click
-          below to report your lost item.
-        </p>
-        <button onclick="window.location.href='report-lost.html'">
-          Report here
-        </button> -->
       </div>
     </div>
-    <!-- <div class="footer">&copy; 2025 Campus Lost &amp; Found</div> -->
+    <script src="script.js"></script>
   </body>
 </html>

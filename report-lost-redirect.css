@@ -1,6 +1,6 @@
 /* Report Lost Redirect Page Styles */
 body {
-  font-family: Arial, sans-serif;
+  font-family: Poppins, Arial, sans-serif;
   background:#f9fafc;
   color: #333;
 }
@@ -31,33 +31,70 @@ body {
   gap: 1rem;
   margin-top: 16px;
 }
-
+ /* Photo Upload Circle  */
 .photo-label {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  gap: 12px;
-  cursor: pointer;
-  color: #353535;
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+.photo-label p {
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 0.75rem;
 }
 
-.photo-upload-flex {
+/* Circle camera button */
+.upload-circle {
+  width: 80px;
+  height: 80px;
   display: flex;
-  background-color: #e5f0ff;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-bottom: 18px;
-  border-radius: 10px;
-  padding: 25px;
+  background: #007bff;
+  color: #fff;
+  font-size: 1.8rem;
+  border-radius: 50%;
+  cursor: pointer;
+  margin: 0 auto 1rem auto;
+  /* centers horizontally + space below */
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-.photo-icon {
-  color: #063080;
-  font-size: 5rem;
+.upload-circle:hover {
+  background: #83d2ff;
+  transform: scale(1.05);
+}
+
+/* Preview grid */
+.preview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.preview-grid img {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Grid for previews */
+.preview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.preview-grid img {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .date-time-row {
