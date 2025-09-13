@@ -1,8 +1,502 @@
 {% extends 'base.html' %}
-{% block title %}Register{% endblock %}
+{% block title %}Register - Campus Lost & Found{% endblock %}
+
+{% block extra_css %}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+* {
+    font-family: 'Inter', sans-serif;
+}
+
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem;
+    background: linear-gradient(135deg, #000000 0%, #333333 50%, #000000 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.auth-container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: float 20s linear infinite;
+}
+
+@keyframes float {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    100% { transform: translate(-50px, -50px) rotate(360deg); }
+}
+
+.auth-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border: 2px solid #000000;
+    border-radius: 20px;
+    padding: 3rem 2.5rem;
+    width: 100%;
+    max-width: 550px;
+    box-shadow: 
+        0 20px 40px rgba(0,0,0,0.3),
+        0 0 0 1px rgba(255,255,255,0.2) inset,
+        0 0 100px rgba(0,0,0,0.2);
+    position: relative;
+    z-index: 1;
+    transform: translateY(0);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: slideInUp 0.8s ease-out;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.auth-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 
+        0 30px 60px rgba(0,0,0,0.4),
+        0 0 0 1px rgba(255,255,255,0.3) inset,
+        0 0 150px rgba(0,0,0,0.3);
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    position: relative;
+}
+
+.auth-header::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, #000000, #666666, #000000);
+    border-radius: 2px;
+}
+
+.auth-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #000000, #333333);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+    animation: textGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes textGlow {
+    from {
+        filter: drop-shadow(0 0 5px rgba(0,0,0,0.3));
+    }
+    to {
+        filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));
+    }
+}
+
+.auth-subtitle {
+    color: #555555;
+    font-size: 1.1rem;
+    font-weight: 400;
+    opacity: 0.8;
+}
+
+.form-group {
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+    color: #000000;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.form-input, .form-select {
+    width: 100%;
+    padding: 1rem 1.2rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: linear-gradient(145deg, #ffffff, #f8f9fa);
+    position: relative;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.form-input:focus, .form-select:focus {
+    outline: none;
+    border-color: #000000;
+    box-shadow: 
+        0 0 0 3px rgba(0,0,0,0.1),
+        0 5px 20px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+    background: #ffffff;
+}
+
+.form-input:hover, .form-select:hover {
+    border-color: #666666;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.btn-primary {
+    width: 100%;
+    background: linear-gradient(135deg, #000000, #333333);
+    color: #ffffff;
+    border: none;
+    padding: 1.2rem;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    margin-top: 1rem;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn-primary:hover::before {
+    left: 100%;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #333333, #000000);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.auth-links {
+    text-align: center;
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 2px solid #f0f0f0;
+    position: relative;
+}
+
+.auth-links::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 2px;
+    background: #000000;
+}
+
+.auth-links p {
+    color: #666666;
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.auth-links a {
+    color: #000000;
+    text-decoration: none;
+    font-weight: 600;
+    position: relative;
+    transition: all 0.3s ease;
+    padding: 0.2rem 0.5rem;
+    border-radius: 6px;
+}
+
+.auth-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #000000;
+    transition: width 0.3s ease;
+}
+
+.auth-links a:hover {
+    color: #000000;
+    background: rgba(0,0,0,0.05);
+}
+
+.auth-links a:hover::after {
+    width: 100%;
+}
+
+.flash-message {
+    padding: 1.2rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    text-align: center;
+    border: 2px solid;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+    animation: slideInDown 0.5s ease-out;
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.flash-message::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.flash-message:hover::before {
+    left: 100%;
+}
+
+.flash-message.success {
+    background: linear-gradient(135deg, #000000, #333333);
+    color: #ffffff;
+    border-color: #000000;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.flash-message.error {
+    background: linear-gradient(135deg, #ffffff, #f8f9fa);
+    color: #000000;
+    border-color: #000000;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.form-note {
+    font-size: 0.85rem;
+    color: #888888;
+    margin-top: 0.5rem;
+    font-style: italic;
+    opacity: 0.8;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .auth-container {
+        padding: 1rem;
+        min-height: 100vh;
+    }
+    
+    .auth-card {
+        padding: 2rem 1.5rem;
+        border-radius: 16px;
+        max-width: 100%;
+    }
+    
+    .auth-title {
+        font-size: 2rem;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+    
+    .form-input, .form-select {
+        padding: 0.9rem 1rem;
+    }
+    
+    .btn-primary {
+        padding: 1rem;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .auth-card {
+        padding: 1.5rem 1rem;
+        margin: 0.5rem;
+    }
+    
+    .auth-title {
+        font-size: 1.8rem;
+    }
+    
+    .auth-subtitle {
+        font-size: 1rem;
+    }
+    
+    .form-row {
+        gap: 0;
+    }
+    
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+}
+{% endblock %}
+
 {% block content %}
-<h2>Register</h2>
-<form method="post">
-    <!-- Registration form fields -->
-</form>
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <h1 class="auth-title">Create Your Account</h1>
+            <p class="auth-subtitle">Join our campus lost and found community</p>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ 'success' if 'success' in message.lower() else 'error' }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <form method="post" class="auth-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="name" class="form-label">Full Name</label>
+                    <input type="text" 
+                           class="form-input" 
+                           id="name" 
+                           name="name" 
+                           placeholder="John Doe"
+                           required 
+                           autocomplete="name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="campus_id" class="form-label">Campus ID</label>
+                    <input type="text" 
+                           class="form-input" 
+                           id="campus_id" 
+                           name="campus_id" 
+                           placeholder="STU123456"
+                           required 
+                           autocomplete="username">
+                    <div class="form-note">Your student or staff ID number</div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="email" class="form-label">Campus Email</label>
+                <input type="email" 
+                       class="form-input" 
+                       id="email" 
+                       name="email" 
+                       placeholder="john.doe@university.edu"
+                       required 
+                       autocomplete="email">
+                <div class="form-note">Use your official campus email address</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="department" class="form-label">Department/Faculty</label>
+                <select class="form-input" 
+                        id="department" 
+                        name="department" 
+                        required>
+                    <option value="">Select your department</option>
+                    <option value="Computer Science">Computer Science</option>
+                    <option value="Engineering">Engineering</option>
+                    <option value="Business Administration">Business Administration</option>
+                    <option value="Medicine">Medicine</option>
+                    <option value="Law">Law</option>
+                    <option value="Education">Education</option>
+                    <option value="Arts & Literature">Arts & Literature</option>
+                    <option value="Sciences">Sciences</option>
+                    <option value="Mathematics">Mathematics</option>
+                    <option value="Social Sciences">Social Sciences</option>
+                    <option value="Administration">Administration</option>
+                    <option value="Student Services">Student Services</option>
+                    <option value="Security">Security</option>
+                    <option value="Maintenance">Maintenance</option>
+                    <option value="Other">Other</option>
+                </select>
+                <div class="form-note">Your department or faculty on campus</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="phone" class="form-label">Phone Number *</label>
+                <input type="tel" 
+                       class="form-input" 
+                       id="phone" 
+                       name="phone" 
+                       placeholder="(555) 123-4567"
+                       autocomplete="tel"
+                       required>
+                <div class="form-note">Required for account verification and contact about items</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" 
+                       class="form-input" 
+                       id="password" 
+                       name="password" 
+                       placeholder="Create a secure password"
+                       required 
+                       autocomplete="new-password"
+                       minlength="6">
+                <div class="form-note">Minimum 6 characters</div>
+            </div>
+            
+            <button type="submit" class="btn-primary">
+                Create Account
+            </button>
+        </form>
+        
+        <div class="auth-links">
+            <p>Already have an account? <a href="{{ url_for('login') }}">Sign in here</a></p>
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -2,10 +2,331 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Lost & Found{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Lost & Found Campus{% endblock %}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Header Styles */
+        .header {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+        
+        .home-btn {
+            background: none;
+            border: 2px solid #ffffff;
+            color: #ffffff;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .home-btn:hover {
+            background-color: #ffffff;
+            color: #000000;
+        }
+        
+        .account-dropdown {
+            position: relative;
+        }
+        
+        .account-btn {
+            background: none;
+            border: 2px solid #ffffff;
+            color: #ffffff;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 4px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .account-btn:hover {
+            background-color: #ffffff;
+            color: #000000;
+        }
+        
+        .dropdown-content {
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background-color: #ffffff;
+            border: 1px solid #000000;
+            border-radius: 4px;
+            min-width: 160px;
+            display: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            z-index: 1001;
+        }
+        
+        .dropdown-content.show {
+            display: block;
+        }
+        
+        .dropdown-content a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: #000000;
+            text-decoration: none;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background-color 0.2s ease;
+        }
+        
+        .dropdown-content a:last-child {
+            border-bottom: none;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: #f8f8f8;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            width: 100%;
+        }
+        
+        /* Footer Styles */
+        .footer {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 2rem 0 1rem 0;
+            margin-top: auto;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .footer-section p,
+        .footer-section a {
+            color: #cccccc;
+            text-decoration: none;
+            line-height: 1.6;
+            transition: color 0.2s ease;
+        }
+        
+        .footer-section a:hover {
+            color: #ffffff;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid #333333;
+            padding-top: 1rem;
+            text-align: center;
+            color: #cccccc;
+            font-size: 0.9rem;
+        }
+        
+        /* Flash Messages */
+        .flash-messages {
+            margin: 1rem auto;
+            max-width: 600px;
+        }
+        
+        .flash-message {
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            border: 1px solid;
+        }
+        
+        .flash-message.success {
+            background-color: #ffffff;
+            color: #000000;
+            border-color: #000000;
+        }
+        
+        .flash-message.error {
+            background-color: #000000;
+            color: #ffffff;
+            border-color: #ffffff;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 0 1rem;
+            }
+            
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .footer-container {
+                padding: 0 1rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+        
+        {% block extra_css %}{% endblock %}
+    </style>
 </head>
 <body>
-    {% block content %}{% endblock %}
+    <header class="header">
+        <div class="nav-container">
+            <a href="{{ url_for('index') }}" class="home-btn">🏠 Home</a>
+            <div class="account-dropdown">
+                <button class="account-btn" onclick="toggleDropdown()">
+                    {% if current_user.is_authenticated %}
+                        👤 {{ current_user.name }}
+                    {% else %}
+                        👤 Account
+                    {% endif %}
+                </button>
+                <div class="dropdown-content" id="accountDropdown">
+                    {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+                        <a href="{{ url_for('report_lost') }}">Report Lost Item</a>
+                        <a href="{{ url_for('report_found') }}">Report Found Item</a>
+                        <a href="{{ url_for('about') }}">About Us</a>
+                        <a href="{{ url_for('logout') }}">Logout</a>
+                    {% else %}
+                        <a href="{{ url_for('login') }}">Login</a>
+                        <a href="{{ url_for('register') }}">Sign Up</a>
+                        <a href="{{ url_for('about') }}">About Us</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </header>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for message in messages %}
+                    <div class="flash-message success">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Lost & Found Campus</h3>
+                    <p>Connecting our campus community to help recover lost items and reunite people with their belongings.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="{{ url_for('index') }}">Home</a></li>
+                        <li><a href="{{ url_for('login') }}">Login</a></li>
+                        <li><a href="{{ url_for('register') }}">Register</a></li>
+                        <li><a href="{{ url_for('about') }}">About Us</a></li>
+                        {% if current_user.is_authenticated %}
+                            <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Help</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" onclick="alert('How to report: Click Report Lost/Found Item and fill out the form')">How to Report Items</a></li>
+                        <li><a href="#" onclick="alert('Contact: support@campus-lostfound.edu')">Contact Support</a></li>
+                        <li><a href="#" onclick="alert('Safety: Never share personal info in item descriptions')">Safety Guidelines</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Campus Info</h3>
+                    <p>🏫 Campus Lost & Found Service</p>
+                    <p>📧 support@campus-lostfound.edu</p>
+                    <p>📞 Campus Security: (555) 123-4567</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Campus Lost & Found. Helping our community stay connected.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleDropdown() {
+            const dropdown = document.getElementById('accountDropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('accountDropdown');
+            const accountBtn = document.querySelector('.account-btn');
+            
+            if (!accountBtn.contains(event.target) && !dropdown.contains(event.target)) {
+                dropdown.classList.remove('show');
+            }
+        });
+
+        {% block extra_js %}{% endblock %}
+    </script>
 </body>
 </html>

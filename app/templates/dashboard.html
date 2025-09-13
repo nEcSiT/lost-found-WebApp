@@ -1,6 +1,980 @@
 {% extends 'base.html' %}
-{% block title %}Dashboard{% endblock %}
+{% block title %}Dashboard - Campus Lost & Found{% endblock %}
+
+{% block extra_css %}
+/* Modern Dashboard Styles */
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+}
+
+.dashboard-hero {
+    background: linear-gradient(135deg, #000000 0%, #434343 100%);
+    color: white;
+    padding: 4rem 0;
+    margin-bottom: 3rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.dashboard-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+    opacity: 0.3;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    animation: slideInDown 0.8s ease-out;
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: linear-gradient(45deg, #ffffff, #e0e0e0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.search-section {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 2.5rem;
+    margin: -2rem auto 3rem;
+    max-width: 900px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    z-index: 2;
+    animation: slideInUp 0.8s ease-out 0.2s both;
+}
+
+.search-container {
+    text-align: center;
+}
+
+.search-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: #000000;
+    background: linear-gradient(45deg, #000000, #434343);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.search-form {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.search-input {
+    flex: 1;
+    padding: 1rem 1.5rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    font-size: 1rem;
+    background-color: #ffffff;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #000000;
+    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.search-btn {
+    background: linear-gradient(135deg, #000000 0%, #434343 100%);
+    color: #ffffff;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.search-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.search-btn:hover::before {
+    left: 100%;
+}
+
+.search-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.search-filters {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    background-color: #ffffff;
+    color: #000000;
+    border: 2px solid #e0e0e0;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.filter-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #000000, #434343);
+    transition: left 0.3s ease;
+    z-index: -1;
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+    color: #ffffff;
+    border-color: #000000;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.filter-btn.active::before,
+.filter-btn:hover::before {
+    left: 0;
+}
+
+.quick-actions {
+    margin-bottom: 4rem;
+    animation: slideInUp 0.8s ease-out 0.4s both;
+}
+
+.actions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.action-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border: 2px solid #e0e0e0;
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.action-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #000000, #434343);
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    z-index: 1;
+}
+
+.action-card:hover::before {
+    transform: translateY(0);
+}
+
+.action-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    border-color: #000000;
+}
+
+.action-card:hover * {
+    color: #ffffff !important;
+    position: relative;
+    z-index: 2;
+}
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.action-card:hover {
+    background-color: #000000;
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.action-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.action-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.action-description {
+    color: #666666;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.action-card:hover .action-description {
+    color: #cccccc;
+}
+
+.action-btn {
+    background-color: #000000;
+    color: #ffffff;
+    border: 2px solid #000000;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-block;
+    transition: all 0.2s ease;
+}
+
+.action-card:hover .action-btn {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.items-section {
+    margin-bottom: 3rem;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #000000;
+}
+
+.view-all-btn {
+    color: #000000;
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+}
+
+.view-all-btn:hover {
+    border-bottom-color: #000000;
+}
+
+/* Modern Responsive Items Grid */
+.items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2.5rem;
+    padding: 2rem 0;
+    animation: fadeInGrid 0.8s ease-out;
+}
+
+/* Ultra-Modern Item Card Design */
+.item-card {
+    background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+    border: 3px solid #000000;
+    border-radius: 20px;
+    padding: 0;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    position: relative;
+    box-shadow: 
+        0 10px 30px rgba(0,0,0,0.1),
+        0 0 0 1px rgba(255,255,255,0.5) inset;
+    transform-style: preserve-3d;
+    animation: slideInUp 0.6s ease-out both;
+}
+
+.item-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0.05) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
+.item-card:hover::before {
+    opacity: 1;
+}
+
+.item-card:hover {
+    background: linear-gradient(145deg, #000000 0%, #1a1a1a 100%);
+    color: #ffffff;
+    transform: translateY(-8px) rotateX(5deg);
+    box-shadow: 
+        0 25px 50px rgba(0,0,0,0.3),
+        0 0 0 1px rgba(255,255,255,0.1) inset,
+        0 0 20px rgba(0,0,0,0.1);
+    border-color: #333333;
+}
+
+/* Modern Card Content Structure */
+.item-content {
+    padding: 2rem;
+    position: relative;
+    z-index: 2;
+}
+
+.item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.item-header::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background: linear-gradient(90deg, #000000, transparent);
+    transition: all 0.3s ease;
+}
+
+.item-card:hover .item-header::after {
+    width: 100px;
+    background: linear-gradient(90deg, #ffffff, transparent);
+}
+
+/* Modern Item Type Badge */
+.item-type {
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.item-type::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+.item-type.lost {
+    background: linear-gradient(135deg, #000000 0%, #333333 100%);
+    color: #ffffff;
+    border: 2px solid #000000;
+}
+
+.item-type.found {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    color: #000000;
+    border: 2px solid #000000;
+}
+
+.item-card:hover .item-type::before {
+    left: 100%;
+}
+
+.item-card:hover .item-type.lost {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    color: #000000;
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(255,255,255,0.2);
+}
+
+.item-card:hover .item-type.found {
+    background: linear-gradient(135deg, #333333 0%, #000000 100%);
+    color: #ffffff;
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+/* Modern Content Typography */
+.item-title {
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    color: #000000;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.item-card:hover .item-title {
+    color: #ffffff;
+    transform: translateX(5px);
+}
+
+.item-description {
+    color: #555555;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.item-card:hover .item-description {
+    color: #cccccc;
+    transform: translateX(3px);
+}
+
+.item-date {
+    font-size: 0.85rem;
+    color: #666666;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.item-card:hover .item-date {
+    color: #ffffff;
+    transform: translateX(2px);
+}
+
+.item-card:hover .item-description {
+    color: #cccccc;
+}
+
+.item-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 2px solid #000000;
+    padding-top: 1.2rem;
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+}
+
+.item-card:hover .item-footer {
+    border-top-color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.item-status {
+    color: #888888;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.item-card:hover .item-status {
+    color: #cccccc;
+}
+
+/* Modern Image Container */
+.item-photo {
+    margin-bottom: 1.5rem;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 3px solid #000000;
+    position: relative;
+    background: linear-gradient(45deg, #f0f0f0 25%, transparent 25%),
+                linear-gradient(-45deg, #f0f0f0 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, #f0f0f0 75%),
+                linear-gradient(-45deg, transparent 75%, #f0f0f0 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
+.item-photo::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
+.item-card:hover .item-photo::before {
+    opacity: 1;
+}
+
+.item-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    display: block;
+}
+
+.item-card:hover .item-image {
+    transform: scale(1.08);
+    filter: brightness(0.9) contrast(1.1);
+}
+
+.item-reporter-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.item-reporter {
+    font-weight: 600;
+    color: #000000;
+    margin-bottom: 0.25rem;
+}
+
+.item-card:hover .item-reporter {
+    color: #ffffff;
+}
+
+.item-department {
+    font-size: 0.7rem;
+    color: #888888;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.item-card:hover .item-department {
+    color: #cccccc;
+}
+
+.no-items {
+    text-align: center;
+    padding: 3rem;
+    color: #666666;
+    border: 3px dashed #cccccc;
+    border-radius: 15px;
+    grid-column: 1 / -1;
+    background: linear-gradient(45deg, #f8f9fa 25%, transparent 25%),
+                linear-gradient(-45deg, #f8f9fa 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, #f8f9fa 75%),
+                linear-gradient(-45deg, transparent 75%, #f8f9fa 75%);
+    background-size: 30px 30px;
+    background-position: 0 0, 0 15px, 15px -15px, -15px 0px;
+}
+
+/* Advanced Animations */
+@keyframes fadeInGrid {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px) rotateX(-10deg);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) rotateX(0deg);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+
+.item-card:active {
+    animation: pulse 0.2s ease-in-out;
+}
+
+/* Ultra-Responsive Design */
+@media (max-width: 1200px) {
+    .items-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .items-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.5rem;
+        padding: 1rem 0;
+    }
+    
+    .item-card {
+        border-radius: 15px;
+    }
+    
+    .item-content {
+        padding: 1.5rem;
+    }
+    
+    .item-title {
+        font-size: 1.2rem;
+    }
+    
+    .item-image {
+        height: 180px;
+    }
+}
+
+@media (max-width: 480px) {
+    .items-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .item-card {
+        margin: 0 0.5rem;
+        border-radius: 12px;
+    }
+    
+    .item-content {
+        padding: 1.2rem;
+    }
+    
+    .item-title {
+        font-size: 1.1rem;
+    }
+    
+    .item-image {
+        height: 160px;
+    }
+    
+    .item-card:hover {
+        transform: translateY(-4px) rotateX(2deg);
+    }
+}
+
+@media (max-width: 768px) {
+    .search-form {
+        flex-direction: column;
+    }
+    
+    .search-filters {
+        justify-content: center;
+    }
+    
+    .actions-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .items-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .search-form {
+        flex-direction: column;
+    }
+    
+    .search-btn {
+        padding: 0.875rem 1.5rem;
+    }
+    
+    .dashboard-hero {
+        padding: 3rem 0;
+    }
+}
+
+/* Animations */
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Loading animation */
+.items-loading {
+    text-align: center;
+    padding: 3rem;
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.items-loading::after {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ccc;
+    border-top: 2px solid #000;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-left: 10px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+{% endblock %}
+
 {% block content %}
-<h2>Dashboard</h2>
-<!-- Dashboard content -->
+<!-- Hero Section -->
+<section class="dashboard-hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">Campus Lost & Found</h1>
+            <p class="hero-subtitle">Connect, Search, and Reunite - Your trusted platform for lost and found items on campus</p>
+        </div>
+    </div>
+</section>
+
+<!-- Search Section -->
+<div class="container">
+    <section class="search-section">
+        <div class="search-container">
+            <h2 class="search-title">🔍 Find Lost & Found Items</h2>
+        <form class="search-form" method="GET" action="{{ url_for('search') }}">
+            <input type="text" 
+                   class="search-input" 
+                   name="search" 
+                   placeholder="Search by item name, description, or location..."
+                   value="{{ request.args.get('search', '') }}">
+            <button type="submit" class="search-btn">🔍 Search</button>
+        </form>
+        <div class="search-filters">
+            <button class="filter-btn {{ 'active' if not request.args.get('type') else '' }}" 
+                    onclick="filterItems('all')">All Items</button>
+            <button class="filter-btn {{ 'active' if request.args.get('type') == 'lost' else '' }}" 
+                    onclick="filterItems('lost')">Lost Items</button>
+            <button class="filter-btn {{ 'active' if request.args.get('type') == 'found' else '' }}" 
+                    onclick="filterItems('found')">Found Items</button>
+            <button class="filter-btn {{ 'active' if request.args.get('status') == 'active' else '' }}" 
+                    onclick="filterItems('active')">Active Only</button>
+        </div>
+    </section>
+
+    <!-- Quick Actions -->
+    <section class="quick-actions">
+        <div class="actions-grid">
+        <div class="action-card">
+            <span class="action-icon">📢</span>
+            <h3 class="action-title">Report Lost Item</h3>
+            <p class="action-description">Lost something on campus? Report it here and let the community help you find it.</p>
+            <a href="{{ url_for('report_lost') }}" class="action-btn">Report Lost Item</a>
+        </div>
+        
+        <div class="action-card">
+            <span class="action-icon">🎯</span>
+            <h3 class="action-title">Report Found Item</h3>
+            <p class="action-description">Found something that doesn't belong to you? Help return it to its owner.</p>
+            <a href="{{ url_for('report_found') }}" class="action-btn">Report Found Item</a>
+        </div>
+    </div>
+</section>
+
+<!-- Items Display -->
+<section class="items-section">
+    <div class="section-header">
+        <h2 class="section-title">
+            {% if request.args.get('search') %}
+                Search Results for "{{ request.args.get('search') }}"
+            {% elif request.args.get('type') == 'lost' %}
+                Lost Items
+            {% elif request.args.get('type') == 'found' %}
+                Found Items
+            {% else %}
+                All Items
+            {% endif %}
+        </h2>
+        <a href="#" class="view-all-btn" onclick="clearFilters()">Clear Filters</a>
+    </div>
+    
+    <div class="items-grid">
+        {% for item in items %}
+            <div class="item-card" onclick="viewItemDetails({{ item.id }})">
+                {% if item.photo_filename %}
+                <div class="item-photo">
+                    <img src="{{ url_for('static', filename='uploads/' + item.photo_filename) }}" 
+                         alt="Photo of {{ item.title }}" 
+                         class="item-image">
+                </div>
+                {% endif %}
+                
+                <div class="item-content">
+                    <div class="item-header">
+                        <span class="item-type {{ item.item_type }}">{{ item.item_type.title() }}</span>
+                        <span class="item-date">{{ item.date_reported.strftime('%b %d') }}</span>
+                    </div>
+                    
+                    <h3 class="item-title">{{ item.title }}</h3>
+                    <p class="item-description">
+                        {{ item.description[:120] }}{% if item.description|length > 120 %}...{% endif %}
+                </p>
+                
+                    <div class="item-footer">
+                        <span class="item-status">{{ item.status }}</span>
+                        <div class="item-reporter-info">
+                            <span class="item-reporter">{{ item.user.name if item.user else 'Anonymous' }}</span>
+                            {% if item.user and item.user.department %}
+                                <span class="item-department">{{ item.user.department }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="no-items">
+                <h3>No items found</h3>
+                <p>
+                    {% if request.args.get('search') %}
+                        No items match your search criteria. Try different keywords or clear the search filter.
+                    {% else %}
+                        No items have been reported yet. Be the first to help your campus community!
+                    {% endif %}
+                </p>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+function filterItems(type) {
+    const url = new URL(window.location);
+    
+    if (type === 'all') {
+        url.searchParams.delete('type');
+        url.searchParams.delete('status');
+    } else if (type === 'active') {
+        url.searchParams.set('status', 'active');
+        url.searchParams.delete('type');
+    } else {
+        url.searchParams.set('type', type);
+        url.searchParams.delete('status');
+    }
+    
+    window.location.href = url.toString();
+}
+
+function clearFilters() {
+    const url = new URL(window.location);
+    url.searchParams.delete('search');
+    url.searchParams.delete('type');
+    url.searchParams.delete('status');
+    window.location.href = url.toString();
+}
+
+function viewItemDetails(itemId) {
+    // Navigate to item details page
+    window.location.href = '/item/' + itemId;
+}
+
+// Add smooth animations
+document.addEventListener('DOMContentLoaded', function() {
+    const itemCards = document.querySelectorAll('.item-card');
+    itemCards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        
+        setTimeout(() => {
+            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, index * 50);
+    });
+});
 {% endblock %}

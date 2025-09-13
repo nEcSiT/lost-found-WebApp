@@ -1,0 +1,407 @@
+{% extends 'base.html' %}
+{% block title %}{{ item.title }} - Campus Lost & Found{% endblock %}
+
+{% block extra_css %}
+.details-container {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+}
+
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    color: #000000;
+    text-decoration: none;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    padding: 0.5rem 1rem;
+    border: 2px solid #000000;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.back-button:hover {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.back-button svg {
+    margin-right: 0.5rem;
+}
+
+.item-details-card {
+    background-color: #ffffff;
+    border: 2px solid #000000;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.item-header {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 2rem;
+    text-align: center;
+}
+
+.item-type-badge {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: #ffffff;
+    color: #000000;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+.item-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.item-date {
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+.item-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    padding: 3rem;
+}
+
+.item-photo-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.item-main-photo {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 8px;
+    border: 2px solid #e0e0e0;
+    margin-bottom: 1rem;
+}
+
+.no-photo-placeholder {
+    width: 100%;
+    height: 400px;
+    background-color: #f8f9fa;
+    border: 2px dashed #cccccc;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #666666;
+    margin-bottom: 1rem;
+}
+
+.no-photo-placeholder svg {
+    margin-bottom: 1rem;
+}
+
+.item-info-section h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #000000;
+    border-bottom: 2px solid #000000;
+    padding-bottom: 0.5rem;
+}
+
+.item-description {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #333333;
+    margin-bottom: 2rem;
+    white-space: pre-wrap;
+}
+
+.item-meta {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.meta-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.meta-item:last-child {
+    border-bottom: none;
+}
+
+.meta-label {
+    font-weight: 600;
+    color: #666666;
+}
+
+.meta-value {
+    font-weight: 500;
+    color: #000000;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-active {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.status-resolved {
+    background-color: #28a745;
+    color: #ffffff;
+}
+
+.contact-section {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.contact-section h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.contact-info {
+    margin-bottom: 1.5rem;
+}
+
+.contact-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.contact-item svg {
+    margin-right: 0.5rem;
+}
+
+.contact-button {
+    display: inline-block;
+    background-color: #ffffff;
+    color: #000000;
+    padding: 0.75rem 2rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.contact-button:hover {
+    background-color: #f0f0f0;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    justify-content: center;
+}
+
+.btn-primary {
+    background-color: #000000;
+    color: #ffffff;
+    border: 2px solid #000000;
+    padding: 0.75rem 2rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.btn-secondary {
+    background-color: #ffffff;
+    color: #000000;
+    border: 2px solid #000000;
+    padding: 0.75rem 2rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+@media (max-width: 768px) {
+    .details-container {
+        padding: 0 1rem;
+    }
+    
+    .item-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 2rem;
+    }
+    
+    .item-title {
+        font-size: 2rem;
+    }
+    
+    .item-main-photo,
+    .no-photo-placeholder {
+        height: 250px;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+    }
+}
+{% endblock %}
+
+{% block content %}
+<div class="details-container">
+    <a href="{{ url_for('dashboard') if current_user.is_authenticated else url_for('index') }}" class="back-button">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zM7.5 3.5a.5.5 0 0 1 0-1h1a.5.5 0 0 1 0 1H7.5zM8 5a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 5z"/>
+            <path d="M11.354 4.646a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708l6-6a.5.5 0 0 1 .708 0z"/>
+        </svg>
+        ← Back to {{ 'Dashboard' if current_user.is_authenticated else 'Home' }}
+    </a>
+
+    <div class="item-details-card">
+        <div class="item-header">
+            <div class="item-type-badge">{{ item.item_type.title() }}</div>
+            <h1 class="item-title">{{ item.title }}</h1>
+            <div class="item-date">Reported on {{ item.date_reported.strftime('%B %d, %Y at %I:%M %p') }}</div>
+        </div>
+
+        <div class="item-content">
+            <div class="item-photo-section">
+                {% if item.photo_filename %}
+                    <img src="{{ url_for('static', filename='uploads/' + item.photo_filename) }}" 
+                         alt="Photo of {{ item.title }}" 
+                         class="item-main-photo">
+                {% else %}
+                    <div class="no-photo-placeholder">
+                        <svg width="48" height="48" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                            <path d="M14.002 13a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2V5A2 2 0 0 1 4.002 3h4.396L10.002 1h4a2 2 0 0 1 2 2v10z"/>
+                        </svg>
+                        <p>No photo available</p>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="item-info-section">
+                <h2>Description</h2>
+                <div class="item-description">{{ item.description }}</div>
+
+                <div class="item-meta">
+                    <div class="meta-item">
+                        <span class="meta-label">Type:</span>
+                        <span class="meta-value">{{ item.item_type.title() }}</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Status:</span>
+                        <span class="meta-value">
+                            <span class="status-badge status-{{ item.status.lower() }}">{{ item.status.title() }}</span>
+                        </span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Date Reported:</span>
+                        <span class="meta-value">{{ item.date_reported.strftime('%B %d, %Y') }}</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Item ID:</span>
+                        <span class="meta-value">#{{ item.id }}</span>
+                    </div>
+                </div>
+
+                {% if current_user.is_authenticated %}
+                <div class="contact-section">
+                    <h3>Contact Reporter</h3>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                            </svg>
+                            {{ item.user.name }}
+                        </div>
+                        {% if item.user.department %}
+                        <div class="contact-item">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M6 12.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm-2.5-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h15a.5.5 0 0 1 0 1h-15a.5.5 0 0 1-.5-.5z"/>
+                            </svg>
+                            {{ item.user.department }}
+                        </div>
+                        {% endif %}
+                        <div class="contact-item">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M2 2a2 2 0 0 0-2 2v8.01A2 2 0 0 0 2 14h5.5a.5.5 0 0 0 0-1H2a1 1 0 0 1-.966-.741l5.64-3.471L8 9.583l7-4.2V8.5a.5.5 0 0 0 1 0V4a2 2 0 0 0-2-2H2Zm3.708 6.208L1 11.105V5.383l4.708 2.825ZM1 4.217V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v.217l-7 4.2-7-4.2Z"/>
+                                <path d="M14.247 14.269c1.01 0 1.587-.857 1.587-2.025v-.21C15.834 10.43 14.64 9 12.52 9h-.035C10.42 9 9 10.36 9 12.432v.214C9 14.82 10.438 16 12.358 16h.044c.594 0 1.018-.074 1.237-.175v-.73c-.245.11-.673.18-1.18.18h-.044c-1.334 0-2.571-.788-2.571-2.655v-.157c0-1.657 1.058-2.724 2.64-2.724h.04c1.535 0 2.484 1.05 2.484 2.326v.118c0 .975-.324 1.39-.639 1.39-.232 0-.41-.148-.41-.42v-2.19h-.906v.569h-.03c-.084-.298-.368-.63-.954-.63-.778 0-1.259.555-1.259 1.4v.528c0 .892.49 1.434 1.26 1.434.471 0 .896-.227 1.014-.643h.043c.118.42.617.648 1.12.648Zm-2.453-1.588v-.227c0-.546.227-.791.573-.791.297 0 .572.192.572.708v.367c0 .573-.253.744-.564.744-.354 0-.581-.215-.581-.8Z"/>
+                            </svg>
+                            {{ item.user.email }}
+                        </div>
+                        <div class="contact-item">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+                            </svg>
+                            {{ item.contact_phone }} <span style="font-size: 0.8em; color: #888;">(for this item)</span>
+                        </div>
+                    </div>
+                    <a href="mailto:{{ item.user.email }}?subject=Regarding {{ item.item_type.title() }} Item: {{ item.title }}&body=Hi {{ item.user.name }},%0D%0A%0D%0AI saw your post about the {{ item.item_type }} item '{{ item.title }}' on Campus Lost & Found.%0D%0A%0D%0A" class="contact-button">
+                        📧 Send Email
+                    </a>
+                </div>
+                {% else %}
+                <div class="contact-section">
+                    <h3>Want to Contact the Reporter?</h3>
+                    <p style="margin-bottom: 1.5rem;">Please log in to view contact information and get in touch with the person who reported this item.</p>
+                    <a href="{{ url_for('login') }}" class="contact-button">
+                        🔐 Login to Contact
+                    </a>
+                </div>
+                {% endif %}
+
+                <div class="action-buttons">
+                    {% if current_user.is_authenticated %}
+                        {% if item.item_type == 'lost' %}
+                            <a href="{{ url_for('report_found') }}" class="btn-primary">📍 I Found This Item</a>
+                        {% else %}
+                            <a href="{{ url_for('report_lost') }}" class="btn-primary">🔍 This is My Item</a>
+                        {% endif %}
+                        <a href="{{ url_for('dashboard') }}" class="btn-secondary">← Back to Dashboard</a>
+                    {% else %}
+                        <a href="{{ url_for('login') }}" class="btn-primary">🔐 Login to Respond</a>
+                        <a href="{{ url_for('index') }}" class="btn-secondary">← Back to Home</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

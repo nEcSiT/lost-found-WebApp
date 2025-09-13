@@ -1,0 +1,657 @@
+{% extends 'base.html' %}
+{% block title %}About Us - Campus Lost & Found{% endblock %}
+
+{% block extra_css %}
+/* Modern About Page Styling */
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.about-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    position: relative;
+}
+
+.about-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23000000" stroke-width="0.5" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+    z-index: -1;
+}
+
+/* Hero Section */
+.hero-section {
+    text-align: center;
+    margin-bottom: 4rem;
+    padding: 3rem 2rem;
+    background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+    border: 3px solid #000000;
+    border-radius: 25px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+    position: relative;
+    overflow: hidden;
+    animation: slideInUp 0.8s ease-out;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    animation: shimmer 3s infinite;
+    z-index: 1;
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #000000;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+    position: relative;
+    z-index: 2;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: #555555;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    line-height: 1.6;
+    position: relative;
+    z-index: 2;
+}
+
+.hero-description {
+    font-size: 1.1rem;
+    color: #666666;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.7;
+    position: relative;
+    z-index: 2;
+}
+
+/* Mission Section */
+.mission-section {
+    margin-bottom: 4rem;
+}
+
+.mission-card {
+    background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+    border: 3px solid #000000;
+    border-radius: 20px;
+    padding: 3rem 2.5rem;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+    animation: slideInUp 0.8s ease-out 0.3s both;
+}
+
+.mission-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    animation: shimmer 3s infinite 1s;
+    z-index: 1;
+}
+
+.mission-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #000000;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    z-index: 2;
+}
+
+.mission-text {
+    font-size: 1.1rem;
+    color: #444444;
+    line-height: 1.8;
+    text-align: center;
+    margin-bottom: 2.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.mission-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: linear-gradient(145deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 2px solid #000000;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.feature-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    background: linear-gradient(145deg, #000000 0%, #333333 100%);
+    color: #ffffff;
+}
+
+.feature-icon {
+    font-size: 1.5rem;
+    min-width: 30px;
+}
+
+.feature-text {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+/* Team Section */
+.team-section {
+    margin-bottom: 4rem;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    color: #000000;
+    margin-bottom: 3rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, #000000, #666666);
+    border-radius: 2px;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.team-card {
+    background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+    border: 3px solid #000000;
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    animation: slideInUp 0.8s ease-out;
+}
+
+.team-card:nth-child(1) { animation-delay: 0.1s; }
+.team-card:nth-child(2) { animation-delay: 0.2s; }
+.team-card:nth-child(3) { animation-delay: 0.3s; }
+.team-card:nth-child(4) { animation-delay: 0.4s; }
+.team-card:nth-child(5) { animation-delay: 0.5s; }
+
+.team-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0,0,0,0.05), transparent);
+    transition: left 0.6s ease;
+}
+
+.team-card:hover {
+    transform: translateY(-15px) scale(1.02);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+    background: linear-gradient(145deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.team-card:hover::before {
+    left: 100%;
+}
+
+.team-avatar {
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(135deg, #000000 0%, #333333 100%);
+    border-radius: 50%;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: #ffffff;
+    font-weight: bold;
+    border: 4px solid #000000;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.team-avatar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.team-card:hover .team-avatar {
+    transform: rotate(5deg) scale(1.1);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+.team-card:hover .team-avatar::before {
+    transform: translateX(100%);
+}
+
+.team-name {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #000000;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.team-role {
+    font-size: 1rem;
+    color: #666666;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-transform: capitalize;
+    position: relative;
+}
+
+.team-role::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 2px;
+    background: #000000;
+    border-radius: 1px;
+}
+
+.team-description {
+    font-size: 0.9rem;
+    color: #777777;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+}
+
+.team-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.skill-tag {
+    background: linear-gradient(135deg, #000000 0%, #333333 100%);
+    color: #ffffff;
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border: 2px solid #000000;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.skill-tag:hover {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    color: #000000;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Project Info Section */
+.project-info {
+    background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+    border: 3px solid #000000;
+    border-radius: 25px;
+    padding: 3rem 2rem;
+    text-align: center;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 3rem;
+}
+
+.project-info::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    animation: shimmer 4s infinite;
+    z-index: 1;
+}
+
+.project-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #000000;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 2;
+}
+
+.project-description {
+    font-size: 1.1rem;
+    color: #666666;
+    line-height: 1.7;
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+/* Contact Section */
+.contact-section {
+    text-align: center;
+    padding: 2rem;
+    background: linear-gradient(145deg, #000000 0%, #333333 100%);
+    color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+}
+
+.contact-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.contact-info {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Animations */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .about-container {
+        padding: 1rem;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .team-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .team-card {
+        padding: 2rem 1.5rem;
+    }
+    
+    .team-avatar {
+        width: 100px;
+        height: 100px;
+        font-size: 2.5rem;
+    }
+    
+    .hero-section,
+    .project-info {
+        padding: 2rem 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 1.5rem;
+    }
+    
+    .section-title {
+        font-size: 1.5rem;
+    }
+    
+    .team-name {
+        font-size: 1.2rem;
+    }
+    
+    .team-card {
+        padding: 1.5rem 1rem;
+    }
+    
+    .team-avatar {
+        width: 80px;
+        height: 80px;
+        font-size: 2rem;
+    }
+}
+{% endblock %}
+
+{% block content %}
+<div class="about-container">
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <h1 class="hero-title">About Campus Lost & Found</h1>
+        <p class="hero-subtitle">Level 100 Computer Science Project - Accra Technical University</p>
+        <p class="hero-description">
+            The Campus Lost & Found system was a project given to Computer Science students in Level 100 at Accra Technical University. 
+            As a team of software Computer Science students, we've come up with the innovative idea to build this lost and found system 
+            whereby students can report lost items or found items and get reunited with their belongings. Our system is designed to help 
+            students, faculty, and staff quickly report and recover lost items. Built with modern technology and a user-friendly interface, 
+            we're making campus life a little bit easier, one found item at a time.
+        </p>
+    </div>
+
+    <!-- Project Mission Section -->
+    <div class="mission-section">
+        <div class="mission-card">
+            <h2 class="mission-title">Our Mission</h2>
+            <p class="mission-text">
+                🎓 As Level 100 Computer Science students at Accra Technical University, we recognized a common problem on campus: 
+                students losing valuable items like phones, laptops, wallets, and personal belongings. Our innovative solution creates 
+                a digital bridge between those who lose items and those who find them.
+            </p>
+            <div class="mission-features">
+                <div class="feature-item">
+                    <span class="feature-icon">📱</span>
+                    <span class="feature-text">Easy Item Reporting</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🔍</span>
+                    <span class="feature-text">Smart Search System</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🤝</span>
+                    <span class="feature-text">Secure Contact System</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">📸</span>
+                    <span class="feature-text">Photo Verification</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Team Section -->
+    <div class="team-section">
+        <h2 class="section-title">Meet Our Development Team</h2>
+        
+        <div class="team-grid">
+            <!-- Nicholas Dornyo -->
+            <div class="team-card">
+                <div class="team-avatar">ND</div>
+                <h3 class="team-name">Nicholas Dornyo</h3>
+                <p class="team-role">Back-end Project Lead</p>
+                <p class="team-description">
+                    Leading the backend development with expertise in server architecture, API design, and project coordination.
+                </p>
+                <div class="team-skills">
+                    <span class="skill-tag">Flask</span>
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">API Design</span>
+                    <span class="skill-tag">Leadership</span>
+                </div>
+            </div>
+
+            <!-- Daniel Eli Dumedah -->
+            <div class="team-card">
+                <div class="team-avatar">DE</div>
+                <h3 class="team-name">Daniel Eli Dumedah</h3>
+                <p class="team-role">Front-end Developer</p>
+                <p class="team-description">
+                    Crafting beautiful and responsive user interfaces with modern web technologies and design principles.
+                </p>
+                <div class="team-skills">
+                    <span class="skill-tag">HTML/CSS</span>
+                    <span class="skill-tag">JavaScript</span>
+                    <span class="skill-tag">UI/UX</span>
+                    <span class="skill-tag">Responsive</span>
+                </div>
+            </div>
+
+            <!-- Daniel Nana Kojo Ayeyi Adjei -->
+            <div class="team-card">
+                <div class="team-avatar">DA</div>
+                <h3 class="team-name">Daniel Nana Kojo Ayeyi Adjei</h3>
+                <p class="team-role">Front-end Developer</p>
+                <p class="team-description">
+                    Specializing in interactive user experiences and modern frontend frameworks for seamless user interaction.
+                </p>
+                <div class="team-skills">
+                    <span class="skill-tag">React</span>
+                    <span class="skill-tag">CSS3</span>
+                    <span class="skill-tag">Animation</span>
+                    <span class="skill-tag">Bootstrap</span>
+                </div>
+            </div>
+
+            <!-- Nhyiraba Agyeman Peprah -->
+            <div class="team-card">
+                <div class="team-avatar">NP</div>
+                <h3 class="team-name">Nhyiraba Agyeman Peprah</h3>
+                <p class="team-role">Documentation & Testing</p>
+                <p class="team-description">
+                    Ensuring code quality through comprehensive testing and maintaining clear, detailed project documentation.
+                </p>
+                <div class="team-skills">
+                    <span class="skill-tag">Testing</span>
+                    <span class="skill-tag">Documentation</span>
+                    <span class="skill-tag">QA</span>
+                    <span class="skill-tag">Technical Writing</span>
+                </div>
+            </div>
+
+            <!-- Kingsley -->
+            <div class="team-card">
+                <div class="team-avatar">K</div>
+                <h3 class="team-name">Kingsley</h3>
+                <p class="team-role">Back-end Developer</p>
+                <p class="team-description">
+                    Database architect and schema designer, focusing on data modeling and backend system optimization.
+                </p>
+                <div class="team-skills">
+                    <span class="skill-tag">Database</span>
+                    <span class="skill-tag">SQLAlchemy</span>
+                    <span class="skill-tag">Schema Design</span>
+                    <span class="skill-tag">Optimization</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Info -->
+    <div class="project-info">
+        <h2 class="project-title">Project Information</h2>
+        <p class="project-description">
+            This Lost & Found system was developed as a comprehensive solution to help campus community members 
+            report and recover lost items efficiently. The system features secure user authentication, 
+            SMS verification, photo uploads, and a modern responsive interface designed for both desktop and mobile use.
+        </p>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="contact-section">
+        <h2 class="contact-title">Get In Touch</h2>
+        <p class="contact-info">Have questions about the system? Need technical support?</p>
+        <p class="contact-info">Contact our development team for assistance.</p>
+    </div>
+</div>
+{% endblock %}

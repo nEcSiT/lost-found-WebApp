@@ -1,5 +1,721 @@
 {% extends 'base.html' %}
-{% block title %}Home{% endblock %}
+{% block title %}Campus Lost & Found - Home{% endblock %}
+
+{% block extra_css %}
+.hero-section {
+    text-align: center;
+    padding: 6rem 0 4rem;
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20" fill="%23000000" opacity="0.02"><polygon points="50,0 60,20 40,20"/></svg>') repeat-x;
+    animation: float 20s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateX(0px) translateY(0px); }
+    50% { transform: translateX(-10px) translateY(-5px); }
+}
+
+.hero-title {
+    font-size: 4rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    color: #000000;
+    position: relative;
+    z-index: 1;
+    animation: slideInDown 1s ease-out;
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero-subtitle {
+    font-size: 1.4rem;
+    color: #555555;
+    margin-bottom: 3rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+    animation: slideInUp 1s ease-out 0.3s both;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.features-section {
+    padding: 4rem 0;
+    background-color: #ffffff;
+}
+
+.features-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #000000;
+    text-align: center;
+    animation: fadeIn 1s ease-out 0.6s both;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.section-subtitle {
+    font-size: 1.1rem;
+    color: #666666;
+    text-align: center;
+    margin-bottom: 4rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    animation: fadeIn 1s ease-out 0.8s both;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+    margin-top: 2rem;
+}
+
+.feature-card {
+    background-color: #ffffff;
+    border: 2px solid #000000;
+    border-radius: 12px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    animation: slideInUp 1s ease-out calc(1s + var(--delay)) both;
+}
+
+.feature-card:nth-child(1) { --delay: 0s; }
+.feature-card:nth-child(2) { --delay: 0.2s; }
+.feature-card:nth-child(3) { --delay: 0.4s; }
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0,0,0,0.05), transparent);
+    transition: left 0.5s ease;
+}
+
+.feature-card:hover::before {
+    left: 100%;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    border-color: #000000;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    background-color: #f8f9fa;
+}
+
+.feature-icon {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover .feature-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.feature-card:hover .feature-title {
+    color: #000000;
+}
+
+.feature-card:hover .feature-description {
+    color: #333333;
+}
+
+.feature-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #000000;
+}
+
+.feature-description {
+    font-size: 1rem;
+    color: #666666;
+    line-height: 1.6;
+}
+
+.cta-section {
+    padding: 5rem 0;
+    background: linear-gradient(135deg, #000000 0%, #333333 100%);
+    text-align: center;
+    color: #ffffff;
+}
+
+.cta-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    animation: slideInUp 1s ease-out 1.5s both;
+}
+
+.cta-subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 3rem;
+    opacity: 0.9;
+    animation: slideInUp 1s ease-out 1.7s both;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: slideInUp 1s ease-out 1.9s both;
+}
+
+.btn-primary {
+    background-color: #ffffff;
+    color: #000000;
+    border: 2px solid #ffffff;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0,0,0,0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn-primary:hover::before {
+    left: 100%;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(255,255,255,0.2);
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.btn-secondary:hover {
+    background-color: #ffffff;
+    color: #000000;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(255,255,255,0.2);
+}
+
+.items-section {
+    margin-top: 3rem;
+}
+
+.section-title {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    color: #000000;
+    text-align: center;
+}
+
+.items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.item-card {
+    border: 2px solid #000000;
+    border-radius: 8px;
+    padding: 1.5rem;
+    background-color: #ffffff;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.item-card:hover {
+    background-color: #000000;
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.item-type {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+
+.item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.item-photo {
+    margin-bottom: 1rem;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid #e0e0e0;
+}
+
+.item-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    display: block;
+}
+
+.item-card:hover .item-image {
+    opacity: 0.9;
+    transform: scale(1.02);
+}
+
+.item-type {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.item-type.lost {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.item-type.found {
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid #000000;
+}
+
+.item-card:hover .item-type.lost {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.item-card:hover .item-type.found {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.item-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.item-description {
+    color: #666666;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+.item-card:hover .item-description {
+    color: #cccccc;
+}
+
+.item-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #888888;
+    border-top: 1px solid #eeeeee;
+    padding-top: 1rem;
+}
+
+.item-card:hover .item-footer {
+    color: #cccccc;
+    border-top-color: #444444;
+}
+
+.item-reporter-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.item-reporter {
+    font-weight: 600;
+    color: #000000;
+    margin-bottom: 0.25rem;
+}
+
+.item-card:hover .item-reporter {
+    color: #ffffff;
+}
+
+.item-department {
+    font-size: 0.7rem;
+    color: #888888;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.item-card:hover .item-department {
+    color: #cccccc;
+}
+
+.item-date {
+    font-size: 0.8rem;
+    color: #888888;
+}
+
+.item-card:hover .item-date {
+    color: #cccccc;
+}
+
+.no-items {
+    text-align: center;
+    padding: 3rem;
+    color: #666666;
+    border: 2px dashed #cccccc;
+    border-radius: 8px;
+    grid-column: 1 / -1;
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 4rem 0 2rem;
+    }
+    
+    .hero-title {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+        padding: 0 1rem;
+        margin-bottom: 2rem;
+    }
+    
+    .features-container {
+        padding: 0 1rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .section-subtitle {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+        padding: 0 1rem;
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        margin-top: 1rem;
+    }
+    
+    .feature-card {
+        padding: 2rem 1.5rem;
+        margin: 0 1rem;
+    }
+    
+    .cta-section {
+        padding: 3rem 1rem;
+    }
+    
+    .cta-title {
+        font-size: 2rem;
+    }
+    
+    .cta-subtitle {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+    }
+    
+    .btn-primary, .btn-secondary {
+        width: 100%;
+        max-width: 280px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .feature-icon {
+        font-size: 2.5rem;
+    }
+    
+    .feature-title {
+        font-size: 1.3rem;
+    }
+    
+    .cta-title {
+        font-size: 1.8rem;
+    }
+}
+{% endblock %}
+
 {% block content %}
-<h1>Welcome nicholas</h1>
+<section class="hero-section">
+    <h1 class="hero-title">Welcome to Campus Lost & Found! 👋</h1>
+    <p class="hero-subtitle">Your friendly campus community hub where lost treasures find their way home. Every item has a story, and we're here to help complete yours! 🎯✨</p>
+</section>
+
+<section class="features-section">
+    <div class="features-container">
+        <h2 class="section-title">How It Works</h2>
+        <p class="section-subtitle">Simple, secure, and effective - connecting our campus community one item at a time</p>
+        
+        <div class="features-grid">
+            <div class="feature-card" onclick="animateCard(this)">
+                <span class="feature-icon">🔍</span>
+                <h3 class="feature-title">Report Lost Items</h3>
+                <p class="feature-description">Lost something? Don't panic! Create a detailed report with photos and descriptions. Our community will keep an eye out for your missing item.</p>
+            </div>
+            
+            <div class="feature-card" onclick="animateCard(this)">
+                <span class="feature-icon">🎯</span>
+                <h3 class="feature-title">Found Something?</h3>
+                <p class="feature-description">Found an item on campus? Be a hero! Report it here and help reunite someone with their belongings. Every good deed makes our campus better!</p>
+            </div>
+            
+            <div class="feature-card" onclick="animateCard(this)">
+                <span class="feature-icon">🤝</span>
+                <h3 class="feature-title">Connect Safely</h3>
+                <p class="feature-description">Our secure platform connects finders and owners while protecting everyone's privacy. Safe, verified, and campus-community focused.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta-section">
+    <h2 class="cta-title">Ready to Get Started? 🚀</h2>
+    <p class="cta-subtitle">Join thousands of students helping each other recover lost items every day</p>
+    
+    <div class="cta-buttons">
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('dashboard') }}" class="btn-primary">
+                📋 Go to Dashboard
+            </a>
+            <a href="{{ url_for('report_lost') }}" class="btn-secondary">
+                📢 Report Lost Item
+            </a>
+        {% else %}
+            <a href="{{ url_for('register') }}" class="btn-primary">
+                🎉 Join Our Community
+            </a>
+            <a href="{{ url_for('login') }}" class="btn-secondary">
+                � Welcome Back
+            </a>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+// Interactive card animations
+function animateCard(card) {
+    card.style.transform = 'scale(0.95)';
+    setTimeout(() => {
+        card.style.transform = 'translateY(-10px) scale(1)';
+    }, 100);
+}
+
+// Smooth scrolling for navigation
+function smoothScrollTo(element) {
+    element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+    });
+}
+
+// Add interactive features when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Add hover sound effect simulation
+    const cards = document.querySelectorAll('.feature-card');
+    cards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-10px) scale(1.02)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+    
+    // Add button click animations
+    const buttons = document.querySelectorAll('.btn-primary, .btn-secondary');
+    buttons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            // Create ripple effect
+            const ripple = document.createElement('span');
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+            
+            ripple.style.cssText = `
+                position: absolute;
+                width: ${size}px;
+                height: ${size}px;
+                left: ${x}px;
+                top: ${y}px;
+                background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+                border-radius: 50%;
+                transform: scale(0);
+                animation: ripple 0.6s linear;
+                pointer-events: none;
+            `;
+            
+            this.style.position = 'relative';
+            this.style.overflow = 'hidden';
+            this.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+    });
+    
+    // Add CSS for ripple animation
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        
+        .feature-card {
+            cursor: pointer;
+        }
+        
+        .feature-card:active {
+            transform: translateY(-5px) scale(0.98);
+        }
+    `;
+    document.head.appendChild(style);
+    
+    // Add scroll-triggered animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+    
+    // Observe elements for scroll animations
+    const animatedElements = document.querySelectorAll('.feature-card, .cta-section');
+    animatedElements.forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(el);
+    });
+});
+
+// Add welcome message for new visitors
+if (!localStorage.getItem('visited')) {
+    setTimeout(() => {
+        console.log('🎉 Welcome to Campus Lost & Found! Thanks for visiting our community platform.');
+        localStorage.setItem('visited', 'true');
+    }, 1000);
+}
 {% endblock %}

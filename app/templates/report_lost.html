@@ -1,12 +1,506 @@
 {% extends 'base.html' %}
-{% block title %}Report Lost Item{% endblock %}
+{% block title %}Report Lost Item - Campus Lost & Found{% endblock %}
+
+{% block extra_css %}
+/* Modern Page Layout */
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.report-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    position: relative;
+}
+
+.report-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23000000" stroke-width="0.5" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+    z-index: -1;
+}
+
+.report-card {
+    background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+    border: 3px solid #000000;
+    border-radius: 20px;
+    padding: 3rem 2.5rem;
+    width: 100%;
+    max-width: 700px;
+    box-shadow: 
+        0 25px 50px rgba(0,0,0,0.15),
+        0 0 0 1px rgba(255,255,255,0.5) inset;
+    position: relative;
+    overflow: hidden;
+    animation: slideInUp 0.8s ease-out;
+}
+
+.report-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    animation: shimmer 2s infinite;
+    z-index: 1;
+}
+
+.report-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
+    z-index: 2;
+}
+
+.report-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #000000;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+    position: relative;
+    display: inline-block;
+}
+
+.report-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #000000, #666666);
+    border-radius: 2px;
+}
+
+.report-subtitle {
+    color: #555555;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-top: 1rem;
+}
+
+/* Modern Form Styling */
+.form-group {
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 2;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.8rem;
+    font-weight: 700;
+    color: #000000;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+}
+
+.form-label::before {
+    content: '';
+    position: absolute;
+    left: -15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, #000000, #666666);
+    border-radius: 2px;
+}
+
+.form-input, .form-select {
+    width: 100%;
+    padding: 1rem 1.2rem;
+    border: 2px solid #000000;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+    position: relative;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.form-textarea {
+    width: 100%;
+    padding: 1rem 1.2rem;
+    border: 2px solid #000000;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+    min-height: 140px;
+    resize: vertical;
+    font-family: inherit;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+    outline: none;
+    border-color: #000000;
+    box-shadow: 
+        0 8px 25px rgba(0,0,0,0.15),
+        0 0 0 4px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+}
+
+.form-input:hover,
+.form-textarea:hover,
+.form-select:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+/* File Input Styling */
+.file-input-container {
+    position: relative;
+    display: block;
+    width: 100%;
+}
+
+.file-input {
+    width: 100%;
+    padding: 1.5rem;
+    border: 3px dashed #000000;
+    border-radius: 15px;
+    background: linear-gradient(145deg, #f8f9fa 0%, #e9ecef 100%);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-align: center;
+    font-weight: 600;
+    position: relative;
+    overflow: hidden;
+}
+
+.file-input::before {
+    content: '📎';
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 0.5rem;
+    animation: bounce 2s infinite;
+}
+
+.file-input:hover {
+    background: linear-gradient(145deg, #e9ecef 0%, #dee2e6 100%);
+    border-color: #333333;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.file-input:active {
+    transform: translateY(0);
+}
+
+.file-input-label {
+    display: block;
+    text-align: center;
+    color: #666666;
+    font-size: 0.9rem;
+}
+
+/* Modern Button Styling */
+.btn-primary {
+    width: 100%;
+    background: linear-gradient(145deg, #000000 0%, #333333 100%);
+    color: #ffffff;
+    border: 3px solid #000000;
+    padding: 1.2rem 2rem;
+    border-radius: 15px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+    color: #000000;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+}
+
+.btn-primary:hover::before {
+    left: 100%;
+}
+
+.btn-primary:active {
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    display: inline-block;
+    background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+    color: #000000;
+    border: 3px solid #000000;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-top: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.btn-secondary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0,0,0,0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn-secondary:hover {
+    background: linear-gradient(145deg, #000000 0%, #333333 100%);
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+.btn-secondary:hover::before {
+    left: 100%;
+}
+
+.back-link {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid #000000;
+    position: relative;
+    z-index: 2;
+}
+
+/* Animations */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .report-container {
+        padding: 1rem;
+    }
+    
+    .report-card {
+        padding: 2rem 1.5rem;
+        margin: 0;
+        border-radius: 15px;
+    }
+    
+    .report-title {
+        font-size: 2rem;
+    }
+    
+    .form-input,
+    .form-textarea,
+    .form-select {
+        padding: 0.8rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .btn-primary,
+    .btn-secondary {
+        padding: 1rem 1.5rem;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .report-title {
+        font-size: 1.8rem;
+    }
+    
+    .form-label {
+        font-size: 1rem;
+    }
+    
+    .form-input,
+    .form-textarea,
+    .form-select {
+        padding: 0.7rem;
+        border-radius: 8px;
+    }
+    
+    .btn-primary,
+    .btn-secondary {
+        padding: 0.8rem 1rem;
+        border-radius: 10px;
+    }
+}
+
+.flash-message {
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    border: 2px solid;
+}
+
+.flash-message.success {
+    background-color: #000000;
+    color: #ffffff;
+    border-color: #000000;
+}
+
+.flash-message.error {
+    background-color: #ffffff;
+    color: #000000;
+    border-color: #000000;
+}
+
+.form-note {
+    font-size: 0.9rem;
+    color: #666666;
+    margin-top: 0.25rem;
+}
+
+@media (max-width: 768px) {
+    .report-card {
+        padding: 2rem;
+        margin: 1rem;
+    }
+}
+{% endblock %}
+
 {% block content %}
-<h2>Report Lost Item</h2>
-<form method="post">
-    <label for="title">Title:</label>
-    <input type="text" name="title" required><br>
-    <label for="description">Description:</label>
-    <textarea name="description" required></textarea><br>
-    <button type="submit">Submit</button>
-</form>
+<div class="report-container">
+    <div class="report-card">
+        <div class="report-header">
+            <h1 class="report-title">Report Lost Item</h1>
+            <p class="report-subtitle">Describe the item you have lost in detail to help others identify it.</p>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ 'success' if 'success' in message.lower() else 'error' }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <form method="post" class="report-form" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="title" class="form-label">Item Title</label>
+                <input type="text" 
+                       class="form-input" 
+                       id="title" 
+                       name="title" 
+                       placeholder="e.g., iPhone 13 Pro Max, Blue Backpack, Wallet"
+                       required>
+                <div class="form-note">Give a clear, specific name for your lost item</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="description" class="form-label">Detailed Description</label>
+                <textarea class="form-textarea" 
+                          id="description" 
+                          name="description" 
+                          placeholder="Provide detailed description including:&#10;• Location where you lost it (building, room, area)&#10;• Date and approximate time you lost it&#10;• Distinguishing features (color, brand, size, condition)&#10;• Any unique markings or accessories"
+                          required></textarea>
+                <div class="form-note">The more details you provide, the easier it will be to identify your item</div>
+            </div>
+
+            <div class="form-group">
+                <label for="contact_phone" class="form-label">Contact Phone Number</label>
+                <input type="tel" 
+                       class="form-input" 
+                       id="contact_phone" 
+                       name="contact_phone" 
+                       placeholder="(555) 123-4567"
+                       value="{{ current_user.phone if current_user.is_authenticated else '' }}"
+                       required>
+                <div class="form-note">Phone number for direct contact about your lost item</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="photo" class="form-label">Photo (Optional)</label>
+                <div class="file-input-container">
+                    <input type="file" 
+                           class="form-input file-input" 
+                           id="photo" 
+                           name="photo" 
+                           accept="image/*">
+                    <label for="photo" class="file-input-label">
+                        📷 Click to upload a photo of the item (if available)<br>
+                        <small>JPG, PNG, or GIF • Max 5MB</small>
+                    </label>
+                </div>
+                <div class="form-note">A photo helps others identify your item more easily</div>
+            </div>
+            
+            <button type="submit" class="btn-primary">
+                📢 Report Lost Item
+            </button>
+        </form>
+        
+        <div class="back-link">
+            <a href="{{ url_for('dashboard') }}" class="btn-secondary">← Back to Dashboard</a>
+        </div>
+    </div>
+</div>
 {% endblock %}
