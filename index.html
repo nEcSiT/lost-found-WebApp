@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lost & Found Items</title>
+    <link rel="stylesheet" href="global.css">
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <!-- Header -->
+    <header class="main-header">
+      <div class="header-content">
+        <!-- Left-aligned logo -->
+        <img
+          src="images/logo.jpg"
+          alt="Campus Lost & Found Logo"
+          class="logo"
+        />
+
+        <!-- Centered text -->
+        <div class="header-text">
+          <h1>FoundLostItems</h1>
+          <!-- <p>Helping students to get back their belongings</p> -->
+        </div>
+      </div>
+    </header>
+
+    <!-- Welcome Section -->
+    <div class="welcome-section">
+      <h2 class="welcome-title">Welcome to Campus Lost and Found</h2>
+      <p class="welcome-desc">
+        Helping Students reconnect with their </br> 
+        belongings quickly and securely
+      </p>
+
+    </div>
+
+    <div class="login-card">
+      <!-- Login Form -->
+      <form id="loginForm" class="active">
+        <div class="form-group">
+          <label for="studentID">Student ID</label>
+          <input
+            type="text"
+            id="studentID"
+            placeholder="Enter your student ID"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input
+            type="text"
+            id="name"
+            placeholder="Enter your full name"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            placeholder="Enter your password"
+            required
+          />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Login</button>
+        <p class="toggle-text">
+          Don’t have an account? <a href="#" id="showSignup">Sign Up</a>
+        </p>
+      </form>
+
+      <!-- Signup Form -->
+      <form id="signupForm">
+        <div class="form-group">
+          <label for="signupID">Student ID</label>
+          <input
+            type="text"
+            id="signupID"
+            placeholder="Enter your student ID"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="email">Student Email</label>
+          <input
+            type="email"
+            id="email"
+            placeholder="Enter your email"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="signupPassword">Password</label>
+          <input
+            type="password"
+            id="signupPassword"
+            placeholder="Create a password"
+            required
+          />
+        </div>
+
+        <button type="submit" class="btn btn-secondary">Sign Up</button>
+        <p class="toggle-text">
+          Already have an account? <a href="#" id="showLogin">Login</a>
+        </p>
+      </form>
+    </div>
+
+    <img
+          src="images/student.png"
+          alt="student holding book"
+          class="student-vector"
+        />
+     
+    
+
+    <script src="script.js"></script>
+  </body>
+</html>

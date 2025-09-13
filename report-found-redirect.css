@@ -1,0 +1,53 @@
+/* Report Found Redirect Page Styles */
+body {
+  font-family: Poppins, Arial, sans-serif;
+  background: #f9fafc;
+  color: #333;
+}
+.header {
+  background:#0056b3;
+  color: #fff;
+  text-align: center;
+  padding: 16px 0 8px 0;
+}
+.logo {
+  height: 48px;
+  width: 48px;
+  border-radius: 24px;
+  margin-bottom: 8px;
+}
+.subheader {
+  background: #d4f5e9;
+  color: #0056b3;
+  text-align: center;
+  padding: 8px 0;
+  font-style: italic;
+}
+.card {
+  background: #fff;
+  border: 1px solid#0ae2d0;
+  border-radius: 10px;
+  padding: 24px;
+  margin: 32px auto;
+  max-width: 350px;
+  box-shadow: 0 2px 8px rgba(18,212,115,0.08);
+  text-align: center;
+}
+.card button {
+  background:#0ae2d0;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.card button:hover {
+  background: #0056b3;
+}
+.footer {
+  background: #363636;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  font-size: 0.9em;
+}

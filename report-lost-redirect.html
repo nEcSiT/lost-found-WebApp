@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Report Found Item</title>
+    <link rel="stylesheet" href="global.css" />
+    <link rel="stylesheet" href="report-lost-redirect.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <div class="header">
+      <img src="images/logo.jpg" alt="Campus Lost & Found Logo" class="logo" />
+      <h1>Kindly Report Found Items</h1>
+    </div>
+
+    <div class="subheader">
+      <p class="tagline">We will help their owners reconnect them!</p>
+    </div>
+
+    <div class="dashboard-container">
+      <div class="card">
+        <form class="report-lost-form">
+          <!-- Upload Photo -->
+          <div class="photo-upload-flex">
+            <div class="photo-label">
+              <p>Upload Photo</p>
+
+              <!-- Hidden file input -->
+              <input
+                type="file"
+                id="photo-upload"
+                name="photo-upload"
+                accept="image/*"
+                capture="environment"
+                multiple
+                required
+                style="display: none"
+              />
+
+              <!-- Circular upload button -->
+              <label for="photo-upload" class="upload-circle">📷</label>
+
+              <!-- Preview area -->
+              <div id="preview" class="preview-grid"></div>
+            </div>
+          </div>
+
+          <!-- Category Dropdown -->
+          <label for="category">Category</label>
+          <select id="category" name="category" required>
+            <option value="">Select category</option>
+            <option value="electronics">Electronics</option>
+            <option value="books">Books</option>
+            <option value="clothing">Clothing</option>
+            <option value="accessories">Accessories</option>
+            <option value="documents">Documents</option>
+            <option value="others">Others</option>
+          </select>
+
+          <!-- Date and Time -->
+          <div class="date-time-row">
+            <div>
+              <label for="date">Date</label>
+              <input type="date" id="date" name="date" required />
+            </div>
+            <div>
+              <label for="time">Time</label>
+              <input type="time" id="time" name="time" optional />
+            </div>
+          </div>
+
+          <!-- Item Description -->
+          <label for="description">Item Description</label>
+          <textarea
+            id="description"
+            name="description"
+            rows="3"
+            required
+          ></textarea>
+          <button type="submit" class="btn btn-primary">Submit Report</button>
+        </form>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
