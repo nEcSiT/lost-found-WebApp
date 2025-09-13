@@ -1,4 +1,10 @@
-Flask
-Flask-SQLAlchemy
-Flask-Login
-Flask-Migrate
+Flask==2.3.3
+Flask-SQLAlchemy==3.0.5
+Flask-Login==0.6.3
+Flask-Migrate==4.0.5
+Werkzeug==2.3.7
+twilio==8.9.1
+Pillow==10.0.1
+gunicorn==21.2.0
+psycopg2-binary==2.9.7
+python-dotenv==1.0.0

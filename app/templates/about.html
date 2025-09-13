@@ -245,22 +245,25 @@ body {
     left: 100%;
 }
 
-.team-avatar {
+.team-photo {
     width: 120px;
     height: 120px;
-    background: linear-gradient(135deg, #000000 0%, #333333 100%);
     border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
     margin: 0 auto 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 3rem;
-    color: #ffffff;
-    font-weight: bold;
     border: 4px solid #000000;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
     transition: all 0.3s ease;
     position: relative;
-    overflow: hidden;
+    z-index: 2;
+    display: block;
+}
+
+.team-photo:hover {
+    transform: scale(1.1);
+    border-color: #333333;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.3);
 }
 
 .team-avatar::before {
@@ -557,7 +560,7 @@ body {
         <div class="team-grid">
             <!-- Nicholas Dornyo -->
             <div class="team-card">
-                <div class="team-avatar">ND</div>
+                <img src="{{ url_for('static', filename='images/nicholas.jpg') }}" alt="Nicholas Dornyo" class="team-photo">
                 <h3 class="team-name">Nicholas Dornyo</h3>
                 <p class="team-role">Back-end Project Lead</p>
                 <p class="team-description">
@@ -573,7 +576,7 @@ body {
 
             <!-- Daniel Eli Dumedah -->
             <div class="team-card">
-                <div class="team-avatar">DE</div>
+                <img src="{{ url_for('static', filename='images/daniel_eli.jpg') }}" alt="Daniel Eli Dumedah" class="team-photo">
                 <h3 class="team-name">Daniel Eli Dumedah</h3>
                 <p class="team-role">Front-end Developer</p>
                 <p class="team-description">
@@ -589,7 +592,7 @@ body {
 
             <!-- Daniel Nana Kojo Ayeyi Adjei -->
             <div class="team-card">
-                <div class="team-avatar">DA</div>
+                <img src="{{ url_for('static', filename='images/daniel_adjei.jpg') }}" alt="Daniel Nana Kojo Ayeyi Adjei" class="team-photo">
                 <h3 class="team-name">Daniel Nana Kojo Ayeyi Adjei</h3>
                 <p class="team-role">Front-end Developer</p>
                 <p class="team-description">
@@ -605,7 +608,7 @@ body {
 
             <!-- Nhyiraba Agyeman Peprah -->
             <div class="team-card">
-                <div class="team-avatar">NP</div>
+                <img src="{{ url_for('static', filename='images/nhyiraba.jpg') }}" alt="Nhyiraba Agyeman Peprah" class="team-photo">
                 <h3 class="team-name">Nhyiraba Agyeman Peprah</h3>
                 <p class="team-role">Documentation & Testing</p>
                 <p class="team-description">
@@ -621,7 +624,7 @@ body {
 
             <!-- Kingsley -->
             <div class="team-card">
-                <div class="team-avatar">K</div>
+                <img src="{{ url_for('static', filename='images/kingsley.jpg') }}" alt="Kingsley" class="team-photo">
                 <h3 class="team-name">Kingsley</h3>
                 <p class="team-role">Back-end Developer</p>
                 <p class="team-description">
