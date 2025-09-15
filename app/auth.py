@@ -96,8 +96,8 @@ def register_user(name, campus_id, email, password, department, phone):
 		else:
 			raise ValueError("Registration failed due to duplicate information")
 
-def verify_user(email, password):
-	user = User.query.filter_by(email=email).first()
+def verify_user(campus_id, password):
+	user = User.query.filter_by(campus_id=campus_id).first()
 	if user and check_password_hash(user.password_hash, password):
 		return user
 	return None

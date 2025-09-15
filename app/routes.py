@@ -66,9 +66,9 @@ def register():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        email = request.form['email']
+        campus_id = request.form['campus_id']
         password = request.form['password']
-        user = verify_user(email, password)
+        user = verify_user(campus_id, password)
         if user:
             login_user(user)
             return redirect(url_for('dashboard'))
