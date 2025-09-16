@@ -2,11 +2,13 @@
 {% block title %}Report Lost Item - Campus Lost & Found{% endblock %}
 
 {% block extra_css %}
+<style>
 /* Modern Page Layout */
 body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    background: linear-gradient(135deg, #f0f7ff 0%, #e3f2fd 25%, #e1f5fe 50%, #e0f2f1 75%, #f3e5f5 100%) !important;
+    background-attachment: fixed !important;
     min-height: 100vh;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .report-container {
@@ -21,23 +23,39 @@ body {
 .report-container::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23000000" stroke-width="0.5" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+    top: 10%;
+    left: 10%;
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, rgba(33, 150, 243, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: floatUp 6s ease-in-out infinite;
+    z-index: -1;
+}
+
+.report-container::after {
+    content: '';
+    position: absolute;
+    bottom: 15%;
+    right: 15%;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(33, 150, 243, 0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: floatDown 8s ease-in-out infinite;
     z-index: -1;
 }
 
 .report-card {
-    background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
-    border: 3px solid #000000;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(33, 150, 243, 0.2);
     border-radius: 20px;
     padding: 3rem 2.5rem;
     width: 100%;
     max-width: 700px;
     box-shadow: 
-        0 25px 50px rgba(0,0,0,0.15),
+        0 25px 50px rgba(33, 150, 243, 0.1),
         0 0 0 1px rgba(255,255,255,0.5) inset;
     position: relative;
     overflow: hidden;
@@ -66,7 +84,7 @@ body {
 .report-title {
     font-size: 2.5rem;
     font-weight: 800;
-    color: #000000;
+    color: #1976d2;
     margin-bottom: 1rem;
     text-transform: uppercase;
     letter-spacing: -0.5px;
@@ -82,7 +100,7 @@ body {
     transform: translateX(-50%);
     width: 80px;
     height: 4px;
-    background: linear-gradient(90deg, #000000, #666666);
+    background: linear-gradient(90deg, #2196F3, #1976d2);
     border-radius: 2px;
 }
 
@@ -104,7 +122,7 @@ body {
     display: block;
     margin-bottom: 0.8rem;
     font-weight: 700;
-    color: #000000;
+    color: #1976d2;
     font-size: 1.1rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -119,46 +137,46 @@ body {
     transform: translateY(-50%);
     width: 4px;
     height: 100%;
-    background: linear-gradient(180deg, #000000, #666666);
+    background: linear-gradient(180deg, #2196F3, #1976d2);
     border-radius: 2px;
 }
 
 .form-input, .form-select {
     width: 100%;
     padding: 1rem 1.2rem;
-    border: 2px solid #000000;
+    border: 2px solid #90caf9;
     border-radius: 12px;
     font-size: 1rem;
     font-weight: 500;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+    background: rgba(255, 255, 255, 0.9);
     position: relative;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 6px rgba(33, 150, 243, 0.1);
 }
 
 .form-textarea {
     width: 100%;
     padding: 1rem 1.2rem;
-    border: 2px solid #000000;
+    border: 2px solid #90caf9;
     border-radius: 12px;
     font-size: 1rem;
     font-weight: 500;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+    background: rgba(255, 255, 255, 0.9);
     min-height: 140px;
     resize: vertical;
     font-family: inherit;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 6px rgba(33, 150, 243, 0.1);
 }
 
 .form-input:focus,
 .form-textarea:focus,
 .form-select:focus {
     outline: none;
-    border-color: #000000;
+    border-color: #2196F3;
     box-shadow: 
-        0 8px 25px rgba(0,0,0,0.15),
-        0 0 0 4px rgba(0,0,0,0.1);
+        0 8px 25px rgba(33, 150, 243, 0.15),
+        0 0 0 4px rgba(33, 150, 243, 0.1);
     transform: translateY(-2px);
 }
 
@@ -166,7 +184,7 @@ body {
 .form-textarea:hover,
 .form-select:hover {
     transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+    box-shadow: 0 6px 20px rgba(33, 150, 243, 0.12);
 }
 
 /* File Input Styling */
@@ -179,9 +197,9 @@ body {
 .file-input {
     width: 100%;
     padding: 1.5rem;
-    border: 3px dashed #000000;
+    border: 3px dashed #64b5f6;
     border-radius: 15px;
-    background: linear-gradient(145deg, #f8f9fa 0%, #e9ecef 100%);
+    background: rgba(227, 242, 253, 0.5);
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     text-align: center;
@@ -199,10 +217,10 @@ body {
 }
 
 .file-input:hover {
-    background: linear-gradient(145deg, #e9ecef 0%, #dee2e6 100%);
-    border-color: #333333;
+    background: rgba(187, 222, 251, 0.7);
+    border-color: #2196F3;
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    box-shadow: 0 8px 25px rgba(33, 150, 243, 0.15);
 }
 
 .file-input:active {
@@ -219,9 +237,9 @@ body {
 /* Modern Button Styling */
 .btn-primary {
     width: 100%;
-    background: linear-gradient(145deg, #000000 0%, #333333 100%);
+    background: linear-gradient(135deg, #2196F3 0%, #1976d2 100%);
     color: #ffffff;
-    border: 3px solid #000000;
+    border: 3px solid #1976d2;
     padding: 1.2rem 2rem;
     border-radius: 15px;
     font-size: 1.1rem;
@@ -232,7 +250,7 @@ body {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    box-shadow: 0 8px 20px rgba(33, 150, 243, 0.3);
 }
 
 .btn-primary::before {
@@ -247,10 +265,10 @@ body {
 }
 
 .btn-primary:hover {
-    background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
-    color: #000000;
+    background: linear-gradient(135deg, #64B5F6 0%, #2196F3 100%);
+    color: #ffffff;
     transform: translateY(-3px);
-    box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+    box-shadow: 0 12px 30px rgba(33, 150, 243, 0.4);
 }
 
 .btn-primary:hover::before {
@@ -263,9 +281,9 @@ body {
 
 .btn-secondary {
     display: inline-block;
-    background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
-    color: #000000;
-    border: 3px solid #000000;
+    background: rgba(255, 255, 255, 0.9);
+    color: #1976d2;
+    border: 2px solid #90caf9;
     padding: 1rem 2rem;
     border-radius: 12px;
     text-decoration: none;
@@ -277,7 +295,7 @@ body {
     margin-top: 1.5rem;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 15px rgba(33, 150, 243, 0.1);
 }
 
 .btn-secondary::before {
@@ -292,10 +310,10 @@ body {
 }
 
 .btn-secondary:hover {
-    background: linear-gradient(145deg, #000000 0%, #333333 100%);
+    background: linear-gradient(135deg, #2196F3 0%, #1976d2 100%);
     color: #ffffff;
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 25px rgba(33, 150, 243, 0.2);
 }
 
 .btn-secondary:hover::before {
@@ -402,15 +420,15 @@ body {
 }
 
 .flash-message.success {
-    background-color: #000000;
-    color: #ffffff;
-    border-color: #000000;
+    background-color: #e8f5e8;
+    color: #2e7d32;
+    border-color: #4caf50;
 }
 
 .flash-message.error {
-    background-color: #ffffff;
-    color: #000000;
-    border-color: #000000;
+    background-color: #ffebee;
+    color: #c62828;
+    border-color: #f44336;
 }
 
 .form-note {
@@ -419,12 +437,24 @@ body {
     margin-top: 0.25rem;
 }
 
+/* Floating animations */
+@keyframes floatUp {
+    0%, 100% { transform: translateY(0px) scale(1); opacity: 0.7; }
+    50% { transform: translateY(-20px) scale(1.1); opacity: 1; }
+}
+
+@keyframes floatDown {
+    0%, 100% { transform: translateY(0px) scale(1); opacity: 0.5; }
+    50% { transform: translateY(15px) scale(0.9); opacity: 0.8; }
+}
+
 @media (max-width: 768px) {
     .report-card {
         padding: 2rem;
         margin: 1rem;
     }
 }
+</style>
 {% endblock %}
 
 {% block content %}
@@ -494,7 +524,7 @@ body {
             </div>
             
             <button type="submit" class="btn-primary">
-                📢 Report Lost Item
+                🆘 Report Lost Item
             </button>
         </form>
         

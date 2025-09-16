@@ -35,7 +35,7 @@ def save_uploaded_photo(photo):
             return unique_filename
     return None
 
-# Landing page: secure homepage without item display
+# Landing page: accessible to both authenticated and non-authenticated users
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -81,8 +81,8 @@ def login():
 @login_required
 def logout():
     logout_user()
-    flash('You have been logged out.')
-    return redirect(url_for('login'))
+    flash('You have been logged out successfully.')
+    return redirect(url_for('index'))
 
 # Dashboard (landing after login)
 @app.route('/dashboard')

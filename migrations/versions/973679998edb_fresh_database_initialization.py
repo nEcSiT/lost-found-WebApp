@@ -1,8 +1,8 @@
-"""Initial migration: create user and item tables
+"""Fresh database initialization
 
-Revision ID: 3805b07c4700
+Revision ID: 973679998edb
 Revises: 
-Create Date: 2025-09-10 15:28:33.406785
+Create Date: 2025-09-16 10:23:28.270275
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '3805b07c4700'
+revision = '973679998edb'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -23,16 +23,25 @@ def upgrade():
     sa.Column('name', sa.String(length=100), nullable=False),
     sa.Column('campus_id', sa.String(length=50), nullable=False),
     sa.Column('email', sa.String(length=120), nullable=False),
+    sa.Column('phone', sa.String(length=20), nullable=False),
+    sa.Column('department', sa.String(length=100), nullable=False),
     sa.Column('password_hash', sa.String(length=128), nullable=False),
+    sa.Column('email_verified', sa.Boolean(), nullable=True),
+    sa.Column('email_verification_code', sa.String(length=6), nullable=True),
+    sa.Column('phone_verified', sa.Boolean(), nullable=True),
+    sa.Column('phone_verification_code', sa.String(length=6), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('campus_id'),
-    sa.UniqueConstraint('email')
+    sa.UniqueConstraint('email'),
+    sa.UniqueConstraint('phone')
     )
     op.create_table('item',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('title', sa.String(length=100), nullable=False),
     sa.Column('description', sa.Text(), nullable=False),
     sa.Column('item_type', sa.String(length=10), nullable=False),
+    sa.Column('contact_phone', sa.String(length=20), nullable=False),
+    sa.Column('photo_filename', sa.String(length=255), nullable=True),
     sa.Column('date_reported', sa.DateTime(), nullable=False),
     sa.Column('status', sa.String(length=20), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=False),

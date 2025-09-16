@@ -2,31 +2,39 @@
 {% block title %}Dashboard - Campus Lost & Found{% endblock %}
 
 {% block extra_css %}
+<style>
 /* Modern Dashboard Styles */
 body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    background: linear-gradient(135deg, #f0f7ff 0%, #e3f2fd 25%, #e1f5fe 50%, #e0f2f1 75%, #f3e5f5 100%) !important;
+    background-attachment: fixed !important;
     font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     min-height: 100vh;
 }
 
 .dashboard-hero {
-    background: linear-gradient(135deg, #000000 0%, #434343 100%);
-    color: white;
-    padding: 4rem 0;
-    margin-bottom: 3rem;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #1a1a1a;
+    padding: 2rem 0;
+    margin-bottom: 2rem;
     position: relative;
     overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .dashboard-hero::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-    opacity: 0.3;
+    top: 10%;
+    right: 10%;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(33, 150, 243, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: floatUp 6s ease-in-out infinite;
+    z-index: 1;
 }
 
 .hero-content {
@@ -37,13 +45,16 @@ body {
 }
 
 .hero-title {
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: 700;
     margin-bottom: 1rem;
-    background: linear-gradient(45deg, #ffffff, #e0e0e0);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #1a1a1a;
+    position: relative;
+    z-index: 3;
+}
+
+.hero-title .highlight {
+    color: #2196F3;
 }
 
 .hero-subtitle {
@@ -54,21 +65,24 @@ body {
 }
 
 .search-section {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    padding: 2.5rem;
-    margin: -2rem auto 3rem;
+    /* Remove card/glassmorphism styling for minimal look */
+    background: none;
+    border-radius: 0;
+    padding: 0 0 2rem 0;
+    margin: 0 auto 2rem;
     max-width: 900px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    position: relative;
-    z-index: 2;
-    animation: slideInUp 0.8s ease-out 0.2s both;
+    box-shadow: none;
+    border: none;
+    position: static;
+    z-index: auto;
+    animation: none;
 }
 
 .search-container {
     text-align: center;
+    padding: 0;
+    background: none;
+    box-shadow: none;
 }
 
 .search-title {
@@ -108,36 +122,21 @@ body {
 }
 
 .search-btn {
-    background: linear-gradient(135deg, #000000 0%, #434343 100%);
+    background: linear-gradient(135deg, #2196F3 0%, #1976d2 100%);
     color: #ffffff;
     border: none;
-    padding: 1rem 2rem;
-    border-radius: 12px;
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.search-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    transition: left 0.5s;
-}
-
-.search-btn:hover::before {
-    left: 100%;
+    box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
 }
 
 .search-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #64B5F6 0%, #2196F3 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
 }
 
 .search-filters {
@@ -148,42 +147,36 @@ body {
 }
 
 .filter-btn {
-    background-color: #ffffff;
-    color: #000000;
-    border: 2px solid #e0e0e0;
-    padding: 0.75rem 1.5rem;
-    border-radius: 25px;
-    font-size: 0.9rem;
+    background: #e3f2fd;
+    color: #1976d2;
+    border: 1.5px solid #90caf9;
+    padding: 0.5rem 1.1rem;
+    border-radius: 20px;
+    font-size: 0.95rem;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
+    transition: all 0.2s;
+    outline: none;
+    box-shadow: none;
+    margin-bottom: 0.5rem;
+    opacity: 0.85;
 }
 
-.filter-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #000000, #434343);
-    transition: left 0.3s ease;
-    z-index: -1;
+.filter-btn.active {
+    background: linear-gradient(135deg, #2196F3 0%, #1976d2 100%);
+    color: #fff;
+    border-color: #1976d2;
+    opacity: 1;
+    transform: scale(1.05);
+    box-shadow: 0 2px 8px rgba(33, 150, 243, 0.15);
+    z-index: 1;
 }
-
-.filter-btn.active,
-.filter-btn:hover {
-    color: #ffffff;
-    border-color: #000000;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-.filter-btn.active::before,
-.filter-btn:hover::before {
-    left: 0;
+.filter-btn:hover:not(.active) {
+    background: #bbdefb;
+    color: #1976d2;
+    border-color: #64b5f6;
+    opacity: 1;
+    transform: scale(1.03);
 }
 
 .quick-actions {
@@ -193,99 +186,71 @@ body {
 
 .actions-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2rem;
-    margin-bottom: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .action-card {
-    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-    border: 2px solid #e0e0e0;
-    border-radius: 16px;
-    padding: 2rem;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(33, 150, 243, 0.2);
+    border-radius: 15px;
+    padding: 1rem 1.5rem;
     text-align: center;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
-    overflow: hidden;
     cursor: pointer;
-}
-
-.action-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, #000000, #434343);
-    transform: translateY(100%);
-    transition: transform 0.3s ease;
-    z-index: 1;
-}
-
-.action-card:hover::before {
-    transform: translateY(0);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    min-height: 80px;
 }
 
 .action-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-    border-color: #000000;
-}
-
-.action-card:hover * {
-    color: #ffffff !important;
-    position: relative;
-    z-index: 2;
-}
-    padding: 2rem;
-    text-align: center;
-    transition: all 0.3s ease;
-}
-
-.action-card:hover {
-    background-color: #000000;
-    color: #ffffff;
+    background: rgba(33, 150, 243, 0.1);
+    border-color: rgba(33, 150, 243, 0.4);
     transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(33, 150, 243, 0.2);
 }
+
+
 
 .action-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    display: block;
+    font-size: 2rem;
+    color: #2196F3;
+    margin: 0;
+    flex-shrink: 0;
+}
+
+.action-content {
+    flex: 1;
+    text-align: left;
 }
 
 .action-title {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     font-weight: 600;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.25rem;
+    color: #1a1a1a;
 }
 
 .action-description {
     color: #666666;
-    margin-bottom: 1.5rem;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    margin: 0;
+    line-height: 1.4;
 }
 
-.action-card:hover .action-description {
-    color: #cccccc;
+/* Floating animations */
+@keyframes floatUp {
+    0%, 100% { transform: translateY(0px) scale(1); opacity: 0.7; }
+    50% { transform: translateY(-20px) scale(1.1); opacity: 1; }
 }
 
-.action-btn {
-    background-color: #000000;
-    color: #ffffff;
-    border: 2px solid #000000;
-    padding: 0.75rem 1.5rem;
-    border-radius: 4px;
-    text-decoration: none;
-    font-weight: 600;
-    display: inline-block;
-    transition: all 0.2s ease;
-}
-
-.action-card:hover .action-btn {
-    background-color: #ffffff;
-    color: #000000;
+@keyframes floatDown {
+    0%, 100% { transform: translateY(0px) scale(1); opacity: 0.5; }
+    50% { transform: translateY(15px) scale(0.9); opacity: 0.8; }
 }
 
 .items-section {
@@ -326,10 +291,19 @@ body {
     animation: fadeInGrid 0.8s ease-out;
 }
 
-/* Ultra-Modern Item Card Design */
+/* Blue Glassmorphism Item Card Design */
 .item-card {
-    background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
-    border: 3px solid #000000;
+    /* Fallback background for browsers that don't support backdrop-filter */
+    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.1);
+    
+    /* Backdrop filter with fallbacks */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    -moz-backdrop-filter: blur(20px);
+    -ms-backdrop-filter: blur(20px);
+    
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 20px;
     padding: 0;
     overflow: hidden;
@@ -337,10 +311,26 @@ body {
     cursor: pointer;
     position: relative;
     box-shadow: 
-        0 10px 30px rgba(0,0,0,0.1),
-        0 0 0 1px rgba(255,255,255,0.5) inset;
+        0 8px 32px rgba(31, 38, 135, 0.2),
+        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
     transform-style: preserve-3d;
     animation: slideInUp 0.6s ease-out both;
+    
+    /* Ensure proper stacking context */
+    z-index: 1;
+    
+    /* Ensure proper display */
+    display: block;
+    width: 100%;
+    min-height: 200px;
+}
+
+/* Fallback for browsers without backdrop-filter support */
+@supports not (backdrop-filter: blur(20px)) {
+    .item-card {
+        background: rgba(255, 255, 255, 0.95);
+        border: 1px solid rgba(33, 150, 243, 0.3);
+    }
 }
 
 .item-card::before {
@@ -350,10 +340,11 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0.05) 100%);
+    background: linear-gradient(135deg, rgba(33, 150, 243, 0.1) 0%, rgba(33, 150, 243, 0.05) 100%);
     opacity: 0;
     transition: opacity 0.3s ease;
     z-index: 1;
+    pointer-events: none;
 }
 
 .item-card:hover::before {
@@ -361,14 +352,25 @@ body {
 }
 
 .item-card:hover {
-    background: linear-gradient(145deg, #000000 0%, #1a1a1a 100%);
-    color: #ffffff;
-    transform: translateY(-8px) rotateX(5deg);
+    background: rgba(33, 150, 243, 0.2);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    -moz-backdrop-filter: blur(25px);
+    -ms-backdrop-filter: blur(25px);
+    transform: translateY(-8px) scale(1.02);
     box-shadow: 
-        0 25px 50px rgba(0,0,0,0.3),
-        0 0 0 1px rgba(255,255,255,0.1) inset,
-        0 0 20px rgba(0,0,0,0.1);
-    border-color: #333333;
+        0 20px 40px rgba(33, 150, 243, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.3) inset,
+        0 0 30px rgba(33, 150, 243, 0.1);
+    border-color: rgba(33, 150, 243, 0.4);
+}
+
+/* Hover fallback for browsers without backdrop-filter support */
+@supports not (backdrop-filter: blur(25px)) {
+    .item-card:hover {
+        background: rgba(33, 150, 243, 0.15);
+        border-color: rgba(33, 150, 243, 0.5);
+    }
 }
 
 /* Modern Card Content Structure */
@@ -376,6 +378,8 @@ body {
     padding: 2rem;
     position: relative;
     z-index: 2;
+    /* Ensure content is clickable */
+    pointer-events: auto;
 }
 
 .item-header {
@@ -392,14 +396,14 @@ body {
     bottom: -10px;
     left: 0;
     width: 50px;
-    height: 3px;
-    background: linear-gradient(90deg, #000000, transparent);
+    height: 2px;
+    background: linear-gradient(90deg, rgba(33, 150, 243, 0.6), transparent);
     transition: all 0.3s ease;
 }
 
 .item-card:hover .item-header::after {
     width: 100px;
-    background: linear-gradient(90deg, #ffffff, transparent);
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.8), transparent);
 }
 
 /* Modern Item Type Badge */
@@ -428,15 +432,19 @@ body {
 }
 
 .item-type.lost {
-    background: linear-gradient(135deg, #000000 0%, #333333 100%);
+    background: linear-gradient(135deg, rgba(244, 67, 54, 0.8) 0%, rgba(244, 67, 54, 0.6) 100%);
     color: #ffffff;
-    border: 2px solid #000000;
+    border: 1px solid rgba(244, 67, 54, 0.3);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .item-type.found {
-    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-    color: #000000;
-    border: 2px solid #000000;
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.8) 0%, rgba(76, 175, 80, 0.6) 100%);
+    color: #ffffff;
+    border: 1px solid rgba(76, 175, 80, 0.3);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .item-card:hover .item-type::before {
@@ -444,17 +452,17 @@ body {
 }
 
 .item-card:hover .item-type.lost {
-    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-    color: #000000;
+    background: linear-gradient(135deg, rgba(244, 67, 54, 1) 0%, rgba(244, 67, 54, 0.8) 100%);
+    color: #ffffff;
     transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(255,255,255,0.2);
+    box-shadow: 0 6px 20px rgba(244, 67, 54, 0.4);
 }
 
 .item-card:hover .item-type.found {
-    background: linear-gradient(135deg, #333333 0%, #000000 100%);
+    background: linear-gradient(135deg, rgba(76, 175, 80, 1) 0%, rgba(76, 175, 80, 0.8) 100%);
     color: #ffffff;
     transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
 }
 
 /* Modern Content Typography */
@@ -462,29 +470,33 @@ body {
     font-size: 1.4rem;
     font-weight: 800;
     margin-bottom: 1rem;
-    color: #000000;
+    color: #1a1a1a;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     transition: all 0.3s ease;
     position: relative;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
 }
 
 .item-card:hover .item-title {
     color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     transform: translateX(5px);
 }
 
 .item-description {
-    color: #555555;
+    color: #444444;
     line-height: 1.6;
     margin-bottom: 1.5rem;
     font-size: 1rem;
     font-weight: 500;
     transition: all 0.3s ease;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
 }
 
 .item-card:hover .item-description {
-    color: #cccccc;
+    color: #f0f0f0;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
     transform: translateX(3px);
 }
 
@@ -495,10 +507,12 @@ body {
     text-transform: uppercase;
     letter-spacing: 0.5px;
     transition: all 0.3s ease;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
 }
 
 .item-card:hover .item-date {
     color: #ffffff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
     transform: translateX(2px);
 }
 
@@ -510,7 +524,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-top: 2px solid #000000;
+    border-top: 1px solid rgba(33, 150, 243, 0.3);
     padding-top: 1.2rem;
     margin-top: 1.5rem;
     font-size: 0.85rem;
@@ -518,18 +532,20 @@ body {
 }
 
 .item-card:hover .item-footer {
-    border-top-color: #ffffff;
+    border-top-color: rgba(255, 255, 255, 0.5);
     transform: translateY(-2px);
 }
 
 .item-status {
-    color: #888888;
+    color: #666666;
     text-transform: uppercase;
     font-weight: 600;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
 }
 
 .item-card:hover .item-status {
-    color: #cccccc;
+    color: #f0f0f0;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 /* Modern Image Container */
@@ -537,14 +553,11 @@ body {
     margin-bottom: 1.5rem;
     border-radius: 15px;
     overflow: hidden;
-    border: 3px solid #000000;
+    border: 1px solid rgba(33, 150, 243, 0.3);
     position: relative;
-    background: linear-gradient(45deg, #f0f0f0 25%, transparent 25%),
-                linear-gradient(-45deg, #f0f0f0 25%, transparent 25%),
-                linear-gradient(45deg, transparent 75%, #f0f0f0 75%),
-                linear-gradient(-45deg, transparent 75%, #f0f0f0 75%);
-    background-size: 20px 20px;
-    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .item-photo::before {
@@ -554,10 +567,11 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 100%);
+    background: linear-gradient(135deg, rgba(33, 150, 243, 0.1) 0%, rgba(33, 150, 243, 0.05) 100%);
     opacity: 0;
     transition: opacity 0.3s ease;
     z-index: 1;
+    pointer-events: none;
 }
 
 .item-card:hover .item-photo::before {
@@ -586,23 +600,27 @@ body {
 
 .item-reporter {
     font-weight: 600;
-    color: #000000;
+    color: #333333;
     margin-bottom: 0.25rem;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
 }
 
 .item-card:hover .item-reporter {
     color: #ffffff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .item-department {
     font-size: 0.7rem;
-    color: #888888;
+    color: #666666;
     text-transform: uppercase;
     font-weight: 500;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
 }
 
 .item-card:hover .item-department {
-    color: #cccccc;
+    color: #e0e0e0;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .no-items {
@@ -650,6 +668,9 @@ body {
 
 .item-card:active {
     animation: pulse 0.2s ease-in-out;
+    background: rgba(33, 150, 243, 0.3);
+    border-color: rgba(33, 150, 243, 0.6);
+    transform: translateY(-4px) scale(0.98);
 }
 
 /* Ultra-Responsive Design */
@@ -764,16 +785,7 @@ body {
     }
 }
 
-@keyframes slideInUp {
-    from {
-        opacity: 0;
-        transform: translateY(50px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+/* slideInUp animation already defined above */
 
 @keyframes fadeIn {
     from {
@@ -808,24 +820,15 @@ body {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+</style>
 {% endblock %}
 
 {% block content %}
-<!-- Hero Section -->
-<section class="dashboard-hero">
-    <div class="container">
-        <div class="hero-content">
-            <h1 class="hero-title">Campus Lost & Found</h1>
-            <p class="hero-subtitle">Connect, Search, and Reunite - Your trusted platform for lost and found items on campus</p>
-        </div>
-    </div>
-</section>
 
-<!-- Search Section -->
+<!-- Search Section (moved above hero) -->
 <div class="container">
-    <section class="search-section">
-        <div class="search-container">
-            <h2 class="search-title">🔍 Find Lost & Found Items</h2>
+    <div class="search-container" style="margin-top: 2rem;">
+        <h2 class="search-title">🔍 Find Lost & Found Items</h2>
         <form class="search-form" method="GET" action="{{ url_for('search') }}">
             <input type="text" 
                    class="search-input" 
@@ -844,24 +847,41 @@ body {
             <button class="filter-btn {{ 'active' if request.args.get('status') == 'active' else '' }}" 
                     onclick="filterItems('active')">Active Only</button>
         </div>
-    </section>
+    </div>
+</div>
+
+<!-- Hero Section -->
+<section class="dashboard-hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title"><span class="highlight">Campus Lost & Found</span></h1>
+            <p class="hero-subtitle">Connect, Search, and Reunite - Your trusted platform for lost and found items on campus</p>
+        </div>
+    </div>
+</section>
 
     <!-- Quick Actions -->
     <section class="quick-actions">
         <div class="actions-grid">
+        <a href="{{ url_for('report_lost') }}" style="text-decoration: none; color: inherit;">
         <div class="action-card">
             <span class="action-icon">📢</span>
-            <h3 class="action-title">Report Lost Item</h3>
-            <p class="action-description">Lost something on campus? Report it here and let the community help you find it.</p>
-            <a href="{{ url_for('report_lost') }}" class="action-btn">Report Lost Item</a>
+            <div class="action-content">
+                <h3 class="action-title">Report Lost Item</h3>
+                <p class="action-description">Lost something? Let the community help you find it.</p>
+            </div>
         </div>
+        </a>
         
+        <a href="{{ url_for('report_found') }}" style="text-decoration: none; color: inherit;">
         <div class="action-card">
             <span class="action-icon">🎯</span>
-            <h3 class="action-title">Report Found Item</h3>
-            <p class="action-description">Found something that doesn't belong to you? Help return it to its owner.</p>
-            <a href="{{ url_for('report_found') }}" class="action-btn">Report Found Item</a>
+            <div class="action-content">
+                <h3 class="action-title">Report Found Item</h3>
+                <p class="action-description">Found something? Help return it to its owner.</p>
+            </div>
         </div>
+        </a>
     </div>
 </section>
 
@@ -884,7 +904,8 @@ body {
     
     <div class="items-grid">
         {% for item in items %}
-            <div class="item-card" onclick="viewItemDetails({{ item.id }})">
+            <a href="{{ url_for('item_details', item_id=item.id) }}" style="text-decoration: none; color: inherit;">
+            <div class="item-card" data-item-id="{{ item.id }}" style="cursor: pointer;">
                 {% if item.photo_filename %}
                 <div class="item-photo">
                     <img src="{{ url_for('static', filename='uploads/' + item.photo_filename) }}" 
@@ -915,6 +936,7 @@ body {
                     </div>
                 </div>
             </div>
+            </a>
         {% else %}
             <div class="no-items">
                 <h3>No items found</h3>
@@ -963,10 +985,11 @@ function viewItemDetails(itemId) {
     window.location.href = '/item/' + itemId;
 }
 
-// Add smooth animations
+// Add smooth animations and click handlers
 document.addEventListener('DOMContentLoaded', function() {
     const itemCards = document.querySelectorAll('.item-card');
     itemCards.forEach((card, index) => {
+        // Animation
         card.style.opacity = '0';
         card.style.transform = 'translateY(20px)';
         
@@ -975,6 +998,33 @@ document.addEventListener('DOMContentLoaded', function() {
             card.style.opacity = '1';
             card.style.transform = 'translateY(0)';
         }, index * 50);
+        
+        // Add click event listener as backup
+        card.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Try data attribute first
+            let itemId = card.getAttribute('data-item-id');
+            
+            // Fallback to onclick attribute
+            if (!itemId) {
+                const onclick = card.getAttribute('onclick');
+                if (onclick) {
+                    const match = onclick.match(/viewItemDetails\((\d+)\)/);
+                    if (match) {
+                        itemId = match[1];
+                    }
+                }
+            }
+            
+            if (itemId) {
+                console.log('Click event backup - Item ID:', itemId);
+                viewItemDetails(itemId);
+            } else {
+                console.error('No item ID found for clicked card');
+            }
+        });
     });
 });
 {% endblock %}

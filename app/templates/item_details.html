@@ -2,6 +2,7 @@
 {% block title %}{{ item.title }} - Campus Lost & Found{% endblock %}
 
 {% block extra_css %}
+<style>
 .details-container {
     max-width: 1000px;
     margin: 2rem auto;
@@ -11,19 +12,27 @@
 .back-button {
     display: inline-flex;
     align-items: center;
-    color: #000000;
+    color: #1a1a1a;
     text-decoration: none;
     font-weight: 600;
     margin-bottom: 2rem;
-    padding: 0.5rem 1rem;
-    border: 2px solid #000000;
-    border-radius: 4px;
-    transition: all 0.2s ease;
+    padding: 0.75rem 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(33, 150, 243, 0.3);
+    border-radius: 15px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(33, 150, 243, 0.1);
 }
 
 .back-button:hover {
-    background-color: #000000;
+    background: rgba(33, 150, 243, 0.2);
+    border-color: rgba(33, 150, 243, 0.5);
     color: #ffffff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(33, 150, 243, 0.2);
 }
 
 .back-button svg {
@@ -31,41 +40,67 @@
 }
 
 .item-details-card {
-    background-color: #ffffff;
-    border: 2px solid #000000;
-    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 25px;
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 20px 40px rgba(31, 38, 135, 0.2);
 }
 
 .item-header {
-    background-color: #000000;
+    background: linear-gradient(135deg, rgba(33, 150, 243, 0.8) 0%, rgba(33, 150, 243, 0.6) 100%);
     color: #ffffff;
-    padding: 2rem;
+    padding: 3rem;
     text-align: center;
+    position: relative;
+}
+
+.item-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 0%, transparent 50%, rgba(255, 255, 255, 0.05) 100%);
+    pointer-events: none;
 }
 
 .item-type-badge {
     display: inline-block;
-    padding: 0.5rem 1rem;
-    background-color: #ffffff;
-    color: #000000;
-    border-radius: 20px;
+    padding: 0.6rem 1.2rem;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 25px;
     font-size: 0.9rem;
     font-weight: 600;
     text-transform: uppercase;
     margin-bottom: 1rem;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 1;
 }
 
 .item-title {
     font-size: 2.5rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 1;
 }
 
 .item-date {
     font-size: 1rem;
-    opacity: 0.8;
+    opacity: 0.9;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1;
 }
 
 .item-content {
@@ -73,6 +108,7 @@
     grid-template-columns: 1fr 1fr;
     gap: 3rem;
     padding: 3rem;
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .item-photo-section {
@@ -85,17 +121,26 @@
     height: 400px;
     object-fit: cover;
     object-position: center;
-    border-radius: 8px;
-    border: 2px solid #e0e0e0;
+    border-radius: 15px;
+    border: 1px solid rgba(33, 150, 243, 0.3);
     margin-bottom: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(31, 38, 135, 0.15);
+}
+
+.item-main-photo:hover {
+    transform: scale(1.02);
+    box-shadow: 0 12px 35px rgba(31, 38, 135, 0.25);
 }
 
 .no-photo-placeholder {
     width: 100%;
     height: 400px;
-    background-color: #f8f9fa;
-    border: 2px dashed #cccccc;
-    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px dashed rgba(33, 150, 243, 0.4);
+    border-radius: 15px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -106,15 +151,17 @@
 
 .no-photo-placeholder svg {
     margin-bottom: 1rem;
+    opacity: 0.7;
 }
 
 .item-info-section h2 {
     font-size: 1.5rem;
     font-weight: 600;
     margin-bottom: 1rem;
-    color: #000000;
-    border-bottom: 2px solid #000000;
+    color: #1a1a1a;
+    border-bottom: 2px solid rgba(33, 150, 243, 0.6);
     padding-bottom: 0.5rem;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
 }
 
 .item-description {
@@ -123,13 +170,18 @@
     color: #333333;
     margin-bottom: 2rem;
     white-space: pre-wrap;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
 }
 
 .item-meta {
-    background-color: #f8f9fa;
-    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
     padding: 1.5rem;
     margin-bottom: 2rem;
+    box-shadow: 0 8px 25px rgba(31, 38, 135, 0.1);
 }
 
 .meta-item {
@@ -137,7 +189,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 0.75rem 0;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid rgba(33, 150, 243, 0.2);
 }
 
 .meta-item:last-child {
@@ -147,47 +199,76 @@
 .meta-label {
     font-weight: 600;
     color: #666666;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
 }
 
 .meta-value {
     font-weight: 500;
-    color: #000000;
+    color: #1a1a1a;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
 }
 
 .status-badge {
     display: inline-block;
-    padding: 0.25rem 0.75rem;
-    border-radius: 12px;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
     font-size: 0.8rem;
     font-weight: 600;
     text-transform: uppercase;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .status-active {
-    background-color: #000000;
+    background: linear-gradient(135deg, rgba(33, 150, 243, 0.8) 0%, rgba(33, 150, 243, 0.6) 100%);
     color: #ffffff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .status-resolved {
-    background-color: #28a745;
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.8) 0%, rgba(76, 175, 80, 0.6) 100%);
     color: #ffffff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .contact-section {
-    background-color: #000000;
+    background: linear-gradient(135deg, rgba(33, 150, 243, 0.8) 0%, rgba(33, 150, 243, 0.6) 100%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     color: #ffffff;
     padding: 2rem;
-    border-radius: 8px;
+    border-radius: 15px;
     text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 25px rgba(31, 38, 135, 0.2);
+    position: relative;
+}
+
+.contact-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 0%, transparent 50%, rgba(255, 255, 255, 0.05) 100%);
+    border-radius: 15px;
+    pointer-events: none;
 }
 
 .contact-section h3 {
     font-size: 1.25rem;
     margin-bottom: 1rem;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 1;
 }
 
 .contact-info {
     margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
 }
 
 .contact-item {
@@ -196,25 +277,41 @@
     align-items: center;
     margin-bottom: 0.5rem;
     font-size: 1rem;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+}
+
+.contact-item:hover {
+    transform: translateX(3px);
 }
 
 .contact-item svg {
     margin-right: 0.5rem;
+    opacity: 0.9;
 }
 
 .contact-button {
     display: inline-block;
-    background-color: #ffffff;
-    color: #000000;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #ffffff;
     padding: 0.75rem 2rem;
-    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
     text-decoration: none;
     font-weight: 600;
-    transition: all 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 1;
 }
 
 .contact-button:hover {
-    background-color: #f0f0f0;
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
 }
 
 .action-buttons {
@@ -225,35 +322,49 @@
 }
 
 .btn-primary {
-    background-color: #000000;
+    background: linear-gradient(135deg, rgba(33, 150, 243, 0.8) 0%, rgba(33, 150, 243, 0.6) 100%);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
     color: #ffffff;
-    border: 2px solid #000000;
+    border: 1px solid rgba(33, 150, 243, 0.4);
     padding: 0.75rem 2rem;
-    border-radius: 4px;
+    border-radius: 12px;
     text-decoration: none;
     font-weight: 600;
-    transition: all 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 15px rgba(33, 150, 243, 0.2);
 }
 
 .btn-primary:hover {
-    background-color: #ffffff;
-    color: #000000;
+    background: linear-gradient(135deg, rgba(33, 150, 243, 1) 0%, rgba(33, 150, 243, 0.8) 100%);
+    border-color: rgba(33, 150, 243, 0.6);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(33, 150, 243, 0.3);
 }
 
 .btn-secondary {
-    background-color: #ffffff;
-    color: #000000;
-    border: 2px solid #000000;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    color: #1a1a1a;
+    border: 1px solid rgba(33, 150, 243, 0.3);
     padding: 0.75rem 2rem;
-    border-radius: 4px;
+    border-radius: 12px;
     text-decoration: none;
     font-weight: 600;
-    transition: all 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 15px rgba(31, 38, 135, 0.1);
 }
 
 .btn-secondary:hover {
-    background-color: #000000;
+    background: rgba(33, 150, 243, 0.2);
+    border-color: rgba(33, 150, 243, 0.5);
     color: #ffffff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(33, 150, 243, 0.2);
 }
 
 @media (max-width: 768px) {
@@ -280,6 +391,7 @@
         flex-direction: column;
     }
 }
+</style>
 {% endblock %}
 
 {% block content %}
