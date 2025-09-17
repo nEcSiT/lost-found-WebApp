@@ -15,12 +15,17 @@
     }
 
     .auth-container {
+        /* Center the form both horizontally and vertically like the login page */
         display: flex;
         justify-content: center;
-        align-items: flex-start;
-        min-height: calc(100vh - 110px);
-        padding: 3rem 1rem 4rem 1rem;
+        align-items: center;
+        /* Account for header + footer area, allow taller content to grow and scroll */
+        min-height: calc(100vh - 120px);
+        /* Balanced padding that won’t create extra bottom whitespace */
+        padding: 2rem 1rem;
         position: relative;
+        /* Clip decorative pseudo-element to prevent horizontal/vertical overflow */
+        overflow: hidden;
     }
 
     .auth-container::before {
@@ -460,13 +465,14 @@
 }
 
 .auth-container {
-    /* Use flexbox centering like login page but allow scrolling */
+    /* Center the form and prevent overflow from decorative layers */
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     min-height: calc(100vh - 120px);
     padding: 2rem 1rem;
     position: relative;
+    overflow: hidden;
 }
 </style>
 {% endblock %}
