@@ -2,7 +2,15 @@ from . import app, db
 from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from .models import Item
-from .auth import register_user, verify_user
+from .auth import (
+    register_user,
+    verify_user,
+    verify_email_code,
+    resend_email_code,
+    generate_phone_reset_code,
+    verify_phone_code,
+    update_user_password,
+)
 from datetime import datetime
 import os
 from werkzeug.utils import secure_filename
@@ -48,13 +56,21 @@ def register():
         campus_id = request.form['campus_id']
         email = request.form['email']
         password = request.form['password']
+        confirm_password = request.form.get('confirm_password', '')
         department = request.form['department']
         phone = request.form['phone']  # Required phone number
         
         try:
+            # Server-side validations
+            if password != confirm_password:
+                flash('Passwords do not match. Please re-enter them.')
+                return render_template('register.html')
+            if len(password) < 6:
+                flash('Password must be at least 6 characters long.')
+                return render_template('register.html')
             register_user(name, campus_id, email, password, department, phone)
-            flash('Registration successful. Please log in.')
-            return redirect(url_for('login'))
+            flash('Registration successful. Please verify your email to log in.')
+            return redirect(url_for('verify_email', email=email))
         except ValueError as e:
             flash(str(e))
         except Exception as e:
@@ -70,6 +86,10 @@ def login():
         password = request.form['password']
         user = verify_user(campus_id, password)
         if user:
+            # Gate login on email verification status
+            if not user.email_verified:
+                flash('Please verify your email before logging in. A code was sent to your email. You can resend it below.')
+                return redirect(url_for('verify_email', email=user.email))
             login_user(user)
             return redirect(url_for('dashboard'))
         else:
@@ -223,3 +243,101 @@ def about():
 @app.route('/favicon.ico')
 def favicon():
     return '', 204
+
+# Email verification routes
+@app.route('/verify-email', methods=['GET', 'POST'])
+def verify_email():
+    if request.method == 'POST':
+        email = request.form.get('email')
+        code = request.form.get('code')
+        if not email or not code:
+            flash('Please provide both email and verification code.')
+            return render_template('verify_email.html')
+        if verify_email_code(email, code):
+            flash('Email verified successfully. You can now log in.')
+            return redirect(url_for('login'))
+        else:
+            flash('Invalid verification code or email. Please try again.')
+    return render_template('verify_email.html')
+
+
+@app.route('/resend-email-code', methods=['POST'])
+def resend_email():
+    email = request.form.get('email')
+    if not email:
+        flash('Please provide your email to resend the code.')
+        return redirect(url_for('verify_email'))
+    if resend_email_code(email):
+        flash('A new verification code has been sent to your email (check console in dev).')
+    else:
+        flash('Email not found. Please register first.')
+    return redirect(url_for('verify_email'))
+
+
+# Password reset via Phone OTP
+@app.route('/forgot-password', methods=['GET', 'POST'])
+def forgot_password():
+    if request.method == 'POST':
+        phone = request.form.get('phone')
+        if not phone:
+            flash('Please enter your phone number.')
+            return render_template('forgot_password.html')
+        if generate_phone_reset_code(phone):
+            flash('A verification code has been sent to your phone (check console in dev).')
+            return redirect(url_for('verify_reset_code', phone=phone))
+        else:
+            flash('Phone number not found. Please check and try again.')
+    return render_template('forgot_password.html')
+
+
+@app.route('/verify-reset-code', methods=['GET', 'POST'])
+def verify_reset_code():
+    phone = request.args.get('phone') or request.form.get('phone')
+    if request.method == 'POST':
+        code = request.form.get('code')
+        if not phone or not code:
+            flash('Please provide your phone and the 6-digit code.')
+        else:
+            user = verify_phone_code(phone, code)
+            if user:
+                # Pass phone as query so reset form knows it
+                return redirect(url_for('reset_password', phone=phone))
+            else:
+                flash('Invalid code. Please try again.')
+    return render_template('verify_reset_code.html', phone=phone)
+
+
+@app.route('/reset-password', methods=['GET', 'POST'])
+def reset_password():
+    phone = request.args.get('phone') or request.form.get('phone')
+    if request.method == 'POST':
+        password = request.form.get('password')
+        confirm_password = request.form.get('confirm_password')
+        if not phone:
+            flash('Missing phone number. Please restart the reset process.')
+            return redirect(url_for('forgot_password'))
+        if not password or not confirm_password:
+            flash('Please enter and confirm your new password.')
+            return render_template('reset_password.html', phone=phone)
+        if password != confirm_password:
+            flash('Passwords do not match.')
+            return render_template('reset_password.html', phone=phone)
+        if len(password) < 6:
+            flash('Password must be at least 6 characters long.')
+            return render_template('reset_password.html', phone=phone)
+
+        # Validate the latest code still belongs to this phone (optional) and update password
+        user = verify_phone_code(phone, request.form.get('code', '')) or verify_phone_code(phone, request.args.get('code', ''))
+        # If no code provided here, assume verification was just completed; find user by phone
+        if not user:
+            from .models import User
+            user = User.query.filter_by(phone=phone).first()
+        if not user:
+            flash('Could not validate phone for reset. Please try again.')
+            return redirect(url_for('forgot_password'))
+
+        update_user_password(user, password)
+        flash('Password updated successfully. You can now log in.')
+        return redirect(url_for('login'))
+
+    return render_template('reset_password.html', phone=phone)

@@ -155,6 +155,22 @@
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
+/* Password visibility toggle */
+.password-wrapper { position: relative; }
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #64748b;
+    padding: 4px;
+    border-radius: 6px;
+}
+.toggle-password:hover{ color:#2196f3; background: rgba(33,150,243,0.06); }
+
 .form-input:focus {
     outline: none;
     border-color: #000000;
@@ -452,13 +468,18 @@
             
             <div class="form-group">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" 
-                       class="form-input" 
-                       id="password" 
-                       name="password" 
-                       placeholder="Enter your password"
-                       required 
-                       autocomplete="current-password">
+                <div class="password-wrapper">
+                    <input type="password" 
+                           class="form-input" 
+                           id="password" 
+                           name="password" 
+                           placeholder="Enter your password"
+                           required 
+                           autocomplete="current-password">
+                    <button type="button" class="toggle-password" data-target="password" aria-label="Show password">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
             </div>
             
             <button type="submit" class="btn-primary">
@@ -467,8 +488,26 @@
         </form>
         
         <div class="auth-links">
+            <p><a href="{{ url_for('forgot_password') }}">Forgot your password?</a></p>
             <p>Don't have an account? <a href="{{ url_for('register') }}">Create an account</a></p>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+document.addEventListener('DOMContentLoaded', function(){
+    document.querySelectorAll('.toggle-password').forEach(function(btn){
+        btn.addEventListener('click', function(){
+            const targetId = this.getAttribute('data-target');
+            const input = document.getElementById(targetId);
+            if (!input) return;
+            const isPassword = input.getAttribute('type') === 'password';
+            input.setAttribute('type', isPassword ? 'text' : 'password');
+            const icon = this.querySelector('i');
+            if (icon) { icon.classList.toggle('fa-eye'); icon.classList.toggle('fa-eye-slash'); }
+            this.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
+        });
+    });
+});
 {% endblock %}

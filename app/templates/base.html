@@ -859,7 +859,7 @@
             <!-- User Account Section -->
             <div class="user-section">
                 {% if current_user.is_authenticated %}
-                    <div class="user-info" id="userInfoButton" onclick="toggleDropdown()">
+                    <div class="user-info" id="userInfoButton">
                         <div class="user-avatar">
                             <i class="fas fa-user"></i>
                         </div>
@@ -899,12 +899,33 @@
                         </a>
                     </div>
                 {% else %}
-                    <div class="auth-buttons">
-                        <a href="{{ url_for('login') }}" class="auth-btn login-btn">
+                    <!-- Guest toggle with dropdown for Login / Sign Up -->
+                    <div class="user-info" id="userInfoButton">
+                        <div class="user-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="user-details">
+                            <span class="user-name">Guest</span>
+                            <span class="user-role">Not signed in</span>
+                        </div>
+                        <i class="fas fa-chevron-down dropdown-arrow"></i>
+                    </div>
+                    <div class="dropdown-content" id="accountDropdown">
+                        <div class="dropdown-header">
+                            <div class="user-avatar-large">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="user-info-dropdown">
+                                <span class="dropdown-name">Welcome</span>
+                                <span class="dropdown-id">Please sign in</span>
+                            </div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a href="{{ url_for('login') }}" class="dropdown-item">
                             <i class="fas fa-sign-in-alt"></i>
                             <span>Login</span>
                         </a>
-                        <a href="{{ url_for('register') }}" class="auth-btn signup-btn">
+                        <a href="{{ url_for('register') }}" class="dropdown-item">
                             <i class="fas fa-user-plus"></i>
                             <span>Sign Up</span>
                         </a>
@@ -1000,25 +1021,16 @@
                 userInfoButton.addEventListener('click', function(e) {
                     e.preventDefault();
                     e.stopPropagation();
-                    
-                    // Force show the dropdown
-                    if (dropdown.classList.contains('show')) {
-                        dropdown.classList.remove('show');
-                        dropdown.style.display = 'none';
-                        userInfoButton.classList.remove('active');
-                    } else {
-                        dropdown.classList.add('show');
-                        dropdown.style.display = 'block';
-                        userInfoButton.classList.add('active');
-                    }
-                    
+
+                    const isOpen = dropdown.classList.contains('show');
+                    dropdown.classList.toggle('show', !isOpen);
+                    dropdown.style.display = !isOpen ? 'block' : 'none';
+                    userInfoButton.classList.toggle('active', !isOpen);
+
                     if (dropdownArrow) {
-                        dropdownArrow.style.transform = dropdown.classList.contains('show') 
-                            ? 'rotate(180deg)' 
-                            : 'rotate(0deg)';
+                        dropdownArrow.style.transform = !isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
                     }
                 });
-            }
 
                 // Close dropdown when clicking outside
                 document.addEventListener('click', function(e) {

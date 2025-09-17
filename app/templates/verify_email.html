@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}Verify Email - Campus Lost & Found{% endblock %}
+
+{% block extra_css %}
+<style>
+  .main-content { background: transparent !important; box-shadow: none !important; }
+  .verify-container { display:flex; align-items:center; justify-content:center; min-height: calc(100vh - 140px); }
+  .card { background: rgba(255,255,255,0.98); border-radius: 20px; padding: 2rem; width:100%; max-width: 520px; box-shadow: 0 12px 36px rgba(0,0,0,0.12); }
+  .card h1 { font-size: 1.75rem; margin-bottom: .25rem; }
+  .card p { color:#64748b; margin-bottom: 1.25rem; }
+  .form-group { margin-bottom: 1rem; }
+  .form-label { display:block; font-weight:600; margin-bottom:.5rem; }
+  .form-input { width:100%; padding: .875rem 1rem; border:2px solid #e5e7eb; border-radius: 12px; font-size: 1rem; }
+  .form-input:focus { outline:none; border-color:#2196f3; box-shadow: 0 0 0 3px rgba(33,150,243,.12); }
+  .btn { width:100%; background:#2196f3; color:#fff; border:none; padding: .9rem 1rem; border-radius:12px; font-weight:700; cursor:pointer; }
+  .btn.secondary { background:#e5e7eb; color:#111827; }
+  .row { display:grid; grid-template-columns: 1fr; gap:.75rem; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="verify-container">
+  <div class="card">
+    <h1>Email Verification</h1>
+    <p>Enter the 6-digit code sent to your email. In development, check the server logs for the code.</p>
+
+    {% with messages = get_flashed_messages(with_categories=false) %}
+      {% if messages %}
+        {% for message in messages %}
+          <div class="flash-message info" style="margin-bottom:1rem;">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <form method="post" action="{{ url_for('verify_email') }}" class="auth-form">
+      <div class="form-group">
+        <label for="email" class="form-label">Email</label>
+        <input id="email" name="email" type="email" class="form-input" placeholder="you@school.edu" required value="{{ request.args.get('email','') }}" />
+      </div>
+      <div class="form-group">
+        <label for="code" class="form-label">Verification Code</label>
+        <input id="code" name="code" type="text" class="form-input" placeholder="123456" minlength="6" maxlength="6" required />
+      </div>
+      <button class="btn" type="submit">Verify Email</button>
+    </form>
+
+    <form method="post" action="{{ url_for('resend_email') }}" style="margin-top: .75rem;">
+      <input type="hidden" name="email" value="{{ request.args.get('email','') }}" />
+      <button class="btn secondary" type="submit">Resend Code</button>
+    </form>
+
+    <div class="auth-links" style="margin-top:1rem;">
+      <p>Already verified? <a href="{{ url_for('login') }}">Sign in</a></p>
+    </div>
+  </div>
+</div>
+{% endblock %}
