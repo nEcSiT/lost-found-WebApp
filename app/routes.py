@@ -69,8 +69,8 @@ def register():
                 flash('Password must be at least 6 characters long.')
                 return render_template('register.html')
             register_user(name, campus_id, email, password, department, phone)
-            flash('Registration successful. Please verify your email to log in.')
-            return redirect(url_for('verify_email', email=email))
+            flash('Registration successful. You can now log in.')
+            return redirect(url_for('login'))
         except ValueError as e:
             flash(str(e))
         except Exception as e:
@@ -86,10 +86,7 @@ def login():
         password = request.form['password']
         user = verify_user(campus_id, password)
         if user:
-            # Gate login on email verification status
-            if not user.email_verified:
-                flash('Please verify your email before logging in. A code was sent to your email. You can resend it below.')
-                return redirect(url_for('verify_email', email=user.email))
+            # Email verification disabled: log in directly
             login_user(user)
             return redirect(url_for('dashboard'))
         else:
@@ -247,31 +244,17 @@ def favicon():
 # Email verification routes
 @app.route('/verify-email', methods=['GET', 'POST'])
 def verify_email():
-    if request.method == 'POST':
-        email = request.form.get('email')
-        code = request.form.get('code')
-        if not email or not code:
-            flash('Please provide both email and verification code.')
-            return render_template('verify_email.html')
-        if verify_email_code(email, code):
-            flash('Email verified successfully. You can now log in.')
-            return redirect(url_for('login'))
-        else:
-            flash('Invalid verification code or email. Please try again.')
-    return render_template('verify_email.html')
+    # Email verification disabled; send users to login/dashboard
+    if current_user.is_authenticated:
+        return redirect(url_for('dashboard'))
+    flash('Email verification is currently disabled. You can log in directly.', 'info')
+    return redirect(url_for('login'))
 
 
 @app.route('/resend-email-code', methods=['POST'])
 def resend_email():
-    email = request.form.get('email')
-    if not email:
-        flash('Please provide your email to resend the code.')
-        return redirect(url_for('verify_email'))
-    if resend_email_code(email):
-        flash('A new verification code has been sent to your email (check console in dev).')
-    else:
-        flash('Email not found. Please register first.')
-    return redirect(url_for('verify_email'))
+    flash('Email verification is disabled for now.', 'info')
+    return redirect(url_for('login'))
 
 
 # Password reset via Phone OTP
