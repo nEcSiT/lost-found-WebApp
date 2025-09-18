@@ -230,7 +230,7 @@ See `DEPLOYMENT.md` for platform-specific steps (Render, Railway, Heroku, etc.).
 ## Team
 - Nicholas Dornyo
 - Daniel Eli Dumedah
-- Daniel Adjei
+- Daniel Nana Kojo Adjei
 - Nhyiraba Agyeman Peprah
 - Kingsley
 
